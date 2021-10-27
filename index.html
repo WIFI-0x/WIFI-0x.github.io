@@ -71,6 +71,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-收藏" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/10/27/%E6%94%B6%E8%97%8F/" class="article-date">
+  <time class="dt-published" datetime="2021-10-27T14:52:07.911Z" itemprop="datePublished">2021-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="收藏"><a href="#收藏" class="headerlink" title="收藏"></a>收藏</h1><h6 id="调试了好久才成功的代码"><a href="#调试了好久才成功的代码" class="headerlink" title="调试了好久才成功的代码"></a>调试了好久才成功的代码</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> x = <span class="number">0</span>, a = <span class="number">1.0</span>, b = <span class="number">1.0</span>, sum = <span class="number">1</span>,d=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>, i = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入x与n\n&quot;</span>);</span><br><span class="line">	scanf_s(<span class="string">&quot;%f&quot;</span>, &amp;x);</span><br><span class="line">	scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= n)</span><br><span class="line">	&#123;</span><br><span class="line">		a = a * x;</span><br><span class="line">		b = b * i;</span><br><span class="line">		d = a / b;</span><br><span class="line">		sum += d;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	sum++;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;e*x=%f&quot;</span>, sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>  zhimu=<span class="number">0</span>,kongge=<span class="number">0</span>,shuzhi=<span class="number">0</span>,other=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>  ch;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please enter a string of characters.&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;Z&#x27;</span> || ch &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">			zhimu++;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">			shuzhi++;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">			kongge++;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			other++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;字母数为%d\n数字数为%d\n空格数为%d\n其他字符个数为%d\n&quot;</span>,zhimu,shuzhi,kongge,other);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/27/QsZG5cx6UCBEq2p.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/" data-id="ckv9n0pxf0006pguyemvxh1cy" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PHP(1)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/10/27/PHP(1)/" class="article-date">
+  <time class="dt-published" datetime="2021-10-27T14:44:15.613Z" itemprop="datePublished">2021-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP-1"><a href="#PHP-1" class="headerlink" title="PHP(1)"></a>PHP(1)</h1><h3 id="对PHP的理解"><a href="#对PHP的理解" class="headerlink" title="对PHP的理解:"></a>对PHP的理解:</h3><p>全称为Hypertext Preprocessor，即超文本预处理器</p>
+<p>PHP最初是个人主页（Personal Home Page）的缩写</p>
+<p>是一种在服务器端运行的开源的脚本语言</p>
+<p><img src="https://i.loli.net/2021/10/24/fFiravWgTluE7Xe.png"></p>
+<h4 id="黄金组合"><a href="#黄金组合" class="headerlink" title="黄金组合"></a>黄金组合</h4><p><strong>LAMP</strong>组合（<u><strong>Linux,Apache,MySQL,PHP</strong></u>),这四个产品都是公开源代码的产品，无版权之争。 </p>
+<p><em>php</em>是一门语言，用来做业务逻辑</p>
+<p><em>Apache</em>为<em>php</em>提供了运行环境</p>
+<p><em>mysql</em>数据库用来存储数据</p>
+<h6 id="wapm组合：window-apche-mysql-php"><a href="#wapm组合：window-apche-mysql-php" class="headerlink" title="wapm组合：window+apche+mysql+php"></a>wapm组合：window+apche+mysql+php</h6>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/10/27/PHP(1)/" data-id="ckv9n0pxa0001pguy2i9zfukv" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-专业名称&amp;概念" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" class="article-date">
@@ -164,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckv6gcrd40002qsuybwv35qm9" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckv9n0pxc0003pguy9elz6ozm" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -194,7 +263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckv6gcrd50003qsuy7pf5771m" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckv9n0pxd0004pguy2lyl7s2g" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -238,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckv6gcrd60004qsuy0vnn55di" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckv9n0pxe0005pguy12bz5ue0" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -267,7 +336,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/10/001/" data-id="ckv6gcrcv0001qsuy6ekcftrm" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/10/001/" data-id="ckv9n0px30000pguy7wwjegqp" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -318,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/09/19/hello-world/" data-id="ckv6gcrcn0000qsuyeibzeb9p" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/09/19/hello-world/" data-id="ckv9n0pxb0002pguy1q880yoe" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -361,6 +430,14 @@
       <ul>
         
           <li>
+            <a href="/2021/10/27/%E6%94%B6%E8%97%8F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/27/PHP(1)/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/">(no title)</a>
           </li>
         
@@ -370,14 +447,6 @@
         
           <li>
             <a href="/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/10/10/001/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/09/19/hello-world/">Hello World</a>
           </li>
         
       </ul>
