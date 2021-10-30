@@ -71,6 +71,38 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-运用随机数并对随机数进行排序" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time class="dt-published" datetime="2021-10-30T01:52:49.131Z" itemprop="datePublished">2021-10-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="运用随机数并对随机数进行排序"><a href="#运用随机数并对随机数进行排序" class="headerlink" title="运用随机数并对随机数进行排序"></a>运用随机数并对随机数进行排序</h1><h2 id="（冒泡排序过程）"><a href="#（冒泡排序过程）" class="headerlink" title="（冒泡排序过程）"></a>（冒泡排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, t;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">	srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line">		<span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)<span class="comment">//进行9次循环，实现9趟比较</span></span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">9</span>-i;j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line">			<span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])</span><br><span class="line">				&#123;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line">				t = a[j];</span><br><span class="line">				a[j] = a[j + <span class="number">1</span>];</span><br><span class="line">				a[j + <span class="number">1</span>] = t;</span><br><span class="line">				&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="（选择排序过程）"><a href="#（选择排序过程）" class="headerlink" title="（选择排序过程）"></a>（选择排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, t, k;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>];<span class="comment">//以下产生10个60~100的随机数存于数组a并显示</span></span><br><span class="line">	srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line">		<span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;<span class="comment">//进行9次循环，实现9趟 选择</span></span><br><span class="line">		k = i;<span class="comment">//预置i为当前范围内最大值的下标，存放于k中</span></span><br><span class="line">		<span class="keyword">for</span> (j = i+<span class="number">1</span>; j &lt; <span class="number">10</span>; j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line">			<span class="keyword">if</span> (a[j] &gt; a[k]) k = j;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line">			<span class="keyword">if</span> (k != i) &#123;</span><br><span class="line">				t = a[i];</span><br><span class="line">				a[i] = a[k];</span><br><span class="line">				a[k] = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/" data-id="ckvd7gld60007n4uy6z23c8bn" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-收藏" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/10/27/%E6%94%B6%E8%97%8F/" class="article-date">
@@ -92,7 +124,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/" data-id="ckvann2060005ecuygw3caaec" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/" data-id="ckvd7gld40004n4uy31pjanow" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -128,7 +160,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/27/PHP(1)/" data-id="ckvann1zw0002ecuyawl8bgwj" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/27/PHP(1)/" data-id="ckvd7gld00001n4uy6k3bdmtb" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -233,7 +265,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckvann1zs0001ecuyfe0x2bf2" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckvd7gld20002n4uy64r5fo8e" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -263,7 +295,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckvann2070006ecuy4733d5qh" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckvd7gld50005n4uy5t8a9oup" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -307,7 +339,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckvann2050004ecuyfoddbwy7" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckvd7gld60006n4uycjucbk3w" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -336,7 +368,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/10/001/" data-id="ckvann1zg0000ecuy3cn7879x" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/10/001/" data-id="ckvd7glcu0000n4uyfyd8e21n" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -387,7 +419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/09/19/hello-world/" data-id="ckvann1zy0003ecuya9ouh6tm" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/09/19/hello-world/" data-id="ckvd7gld30003n4uy8l3jhacf" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -430,6 +462,10 @@
       <ul>
         
           <li>
+            <a href="/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/10/27/%E6%94%B6%E8%97%8F/">(no title)</a>
           </li>
         
@@ -443,10 +479,6 @@
         
           <li>
             <a href="/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/">(no title)</a>
           </li>
         
       </ul>
