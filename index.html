@@ -71,6 +71,42 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-自定义函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2021-11-09T14:20:27.853Z" itemprop="datePublished">2021-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h1><p><img src="https://i.loli.net/2021/11/09/QEjB8qTLZzp7lUW.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> z = <span class="number">0</span>;</span><br><span class="line">	z = x + y;</span><br><span class="line">	<span class="keyword">return</span> z;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">565</span>, b=<span class="number">5654</span>;<span class="comment">//什么值都不影响</span></span><br><span class="line">	scanf_s(<span class="string">&quot;%d%d&quot;</span>, &amp;a,&amp;b);<span class="comment">//两个%d之间不能有’，‘</span></span><br><span class="line">	<span class="keyword">int</span> c = Add(a, b);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://i.loli.net/2021/11/09/NL2ikjAetyofvUM.png"></p>
+<p><em>天气晴 今天好冷</em></p>
+<p>2021 11 09</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" data-id="ckvs6leyp0000i4uydccjex9x" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-November 4,2021" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/11/04/November%204,2021/" class="article-date">
@@ -121,8 +157,8 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="MYSQL"><a href="#MYSQL" class="headerlink" title="MYSQL"></a>MYSQL</h1><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><p>查库：select schema_name from information_schema.schemata;</p>
-<p>查表：select table_name from information_schema.tables where table_schema=<code>security</code>;</p>
-<p>查列：select column_name from  information_schema.columns where table _name=<code>users</code>;</p>
+<p>查表：select table_name from information_schema.tables where table_schema=’security’;</p>
+<p>查列：select column_name from  information_schema.columns where table_name=’users’;</p>
 <p>查字段：select username,password from security.users;</p>
 <p><img src="https://i.loli.net/2021/11/06/pEtf2gQ7FSAzNnr.png"></p>
 <p><img src="https://i.loli.net/2021/11/06/EKztJmBueQk1ZIx.png"></p>
@@ -461,58 +497,12 @@
 
 
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/09/19/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-09-19T07:05:38.796Z" itemprop="datePublished">2021-09-19</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/09/19/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/09/19/hello-world/" data-id="ckvnn396v0001gcuy7crl79ns" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -543,6 +533,10 @@
       <ul>
         
           <li>
+            <a href="/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/11/04/November%204,2021/">(no title)</a>
           </li>
         
@@ -556,10 +550,6 @@
         
           <li>
             <a href="/2021/10/27/%E6%94%B6%E8%97%8F/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/10/27/PHP(1)/">(no title)</a>
           </li>
         
       </ul>
