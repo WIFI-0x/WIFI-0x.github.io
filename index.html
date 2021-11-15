@@ -71,6 +71,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-秀哥硬核SQL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/" class="article-date">
+  <time class="dt-published" datetime="2021-11-11T13:01:23.390Z" itemprop="datePublished">2021-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="秀哥硬核SQL"><a href="#秀哥硬核SQL" class="headerlink" title="秀哥硬核SQL"></a>秀哥硬核SQL</h1><hr>
+<p><strong>有什么库</strong>       show databases;</p>
+<p><strong>有什么表</strong>       show tables;</p>
+<p><strong>表里的结构</strong>    desc 表名；</p>
+<p><strong>使用库</strong>            use 库名；</p>
+<p><strong>建立库</strong>            create database 库名</p>
+<p><strong>删除库</strong>            drop database 库名</p>
+<p><strong>建立表</strong>            create table 表名 (字段名1 字段类型，字段名2 字段类型) </p>
+<h4 id="常见类型-数字-int-字符串-varchar-需要加“-”"><a href="#常见类型-数字-int-字符串-varchar-需要加“-”" class="headerlink" title="常见类型 数字 int 字符串 varchar(需要加“ ”)"></a><u><em>常见类型 数字 int 字符串 varchar</em></u>(需要加“ ”)</h4><p><strong>删除表</strong>            drop table 表名</p>
+<h3 id="修改表内字段"><a href="#修改表内字段" class="headerlink" title="修改表内字段{"></a><strong>修改表内字段</strong>{</h3><p><strong>增加字段</strong> alter table 表名 add 字段名 字段类型</p>
+<p><strong>删字段</strong> alter table 表名 drop 字段名</p>
+<p><strong>修改表内字段名</strong> alter table 表名 change 旧字符名 新字符名 新类型 </p>
+<p>}</p>
+<h3 id="往表内插入数据（增）暂时不会插入汉字"><a href="#往表内插入数据（增）暂时不会插入汉字" class="headerlink" title="往表内插入数据（增）暂时不会插入汉字"></a><strong>往表内插入数据（增）</strong>暂时不会插入汉字</h3><p>：insert into 表名values (值1, 值2);//按顺序插入</p>
+<p>​                                         或者 insert into 表名（列名1，列名2） values(值1， 值2)</p>
+<p><strong>修改数据</strong> update 表名 set 列名=新值 where 列名=旧值</p>
+<p>​                 update 表名 set 列名=新列值，列名2=新列值 where 列名 =旧列值</p>
+<p><strong>删除数据</strong> delete from 表名 where 列名=列值  </p>
+<p>//这会删除这列中的一个数 </p>
+<p>//如果不写 where及后面的东西 就会删除整个表</p>
+<p>​                  </p>
+<h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>select*from 表名 where 条件（条件可以这样写 列名=”这列中的某个数据”）</p>
+<p>select  字段名 from 表名 where 条件 </p>
+<p>SELECT *FROM 表名 ORDER BY 列名(可以用1，2，3.) </p>
+<p>  //在最后面加<strong>desc</strong>将以降序排列</p>
+<h5 id="休眠-select-sleep（10）；-服务器摸鱼10s"><a href="#休眠-select-sleep（10）；-服务器摸鱼10s" class="headerlink" title="休眠 select sleep（10）； //服务器摸鱼10s"></a>休眠 select sleep（10）； //服务器摸鱼10s</h5><p><strong>注意</strong></p>
+<p><em>1 SQL语句结尾要加 ;</em></p>
+<p><em>2 数据库语句部分大小写，但是数据分</em></p>
+<p><em>3 数值要加   ‘66’</em></p>
+<h3 id="cmd的命令"><a href="#cmd的命令" class="headerlink" title="cmd的命令"></a>cmd的命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//进入d盘</span><br><span class="line">D:</span><br><span class="line">//进入F盘</span><br><span class="line">F:</span><br><span class="line">查看当前目录 dir</span><br><span class="line">打开 cd</span><br><span class="line">返回上一级 cd ..</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="打开mysql"><a href="#打开mysql" class="headerlink" title="打开mysql"></a>打开mysql</h3><p>D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql -u root -p</p>
+<p>第一步 d：//切换到d盘</p>
+<p>第二步  cd D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql</p>
+<p>第三步  mysql -u root -****</p>
+<p>2021 11 15 星期一</p>
+<h1 id="Fighting"><a href="#Fighting" class="headerlink" title="Fighting"></a><em><strong>Fighting</strong></em></h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/" data-id="ckw0rpwo50009rouy5ros25n6" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-自定义函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" class="article-date">
@@ -95,7 +159,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" data-id="ckvs6leyp0000i4uydccjex9x" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/" data-id="ckw0rpwo5000arouy32h73zma" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -132,7 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/11/04/November%204,2021/" data-id="ckvnn396z0004gcuydp4neyqf" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/11/04/November%204,2021/" data-id="ckw0rpwo00003rouy9bwi1koi" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -176,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/11/01/MYSQL/" data-id="ckvnn396k0000gcuyfwoogrxq" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/11/01/MYSQL/" data-id="ckw0rpwnz0002rouy3kh6glrx" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -208,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/" data-id="ckvnn39760008gcuy5iy467df" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/" data-id="ckw0rpwo7000brouyawqkcscx" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -241,7 +305,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/" data-id="ckvnn39750006gcuychsjfpm2" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/" data-id="ckw0rpwo30007rouy6qaahyst" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -277,7 +341,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/27/PHP(1)/" data-id="ckvnn39740005gcuybaf06h6x" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/27/PHP(1)/" data-id="ckw0rpwny0001rouyh2wr884m" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -382,7 +446,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckvnn396y0003gcuyfkuj4fvh" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckw0rpwo20005rouyfglj7ekk" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -412,7 +476,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckvnn39770009gcuybmyi8a47" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckw0rpwo40008rouyh6dcci8r" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -456,36 +520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckvnn39750007gcuyevdg8khp" data-title="" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-001" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/10/10/001/" class="article-date">
-  <time class="dt-published" datetime="2021-10-10T14:56:31.188Z" itemprop="datePublished">2021-10-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>太感动了 终于发送成功了 0.0</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/10/001/" data-id="ckvnn396x0002gcuybqtbgm3e" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckw0rpwo30006rouy67569d3c" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -533,6 +568,10 @@
       <ul>
         
           <li>
+            <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">(no title)</a>
           </li>
         
@@ -546,10 +585,6 @@
         
           <li>
             <a href="/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/10/27/%E6%94%B6%E8%97%8F/">(no title)</a>
           </li>
         
       </ul>
