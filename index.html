@@ -71,6 +71,43 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-如何判断是字符型注入还是数字型注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2021-11-16T12:12:57.287Z" itemprop="datePublished">2021-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="如何判断是字符型注入还是数字型注入"><a href="#如何判断是字符型注入还是数字型注入" class="headerlink" title="如何判断是字符型注入还是数字型注入"></a>如何判断是字符型注入还是数字型注入</h1><p><img src="https://i.loli.net/2021/11/16/eQJ8KEMIw93Ut4C.png"></p>
+<pre><code> 1：字符型会自动加入两个单引号。
+ 2：数字型不会加入两个单引号。
+ 3：被单引号括起来的数据会被当成一个整体。
+ 4：LIMIT m,n 会影响select语句的结果。
+ 5：页面回显发生错误和页面不回显数据是两回事。前者表示sql语句出错了，后者表示sql语句没有错误，但是条件不成立。
+</code></pre>
+<h1 id="union用法："><a href="#union用法：" class="headerlink" title="union用法："></a>union用法：</h1><p>UNION操作符用于合并两个或多个SELECT语句的结果集，而且UNION内部的SELECT语句必须拥<br>有相同数量的列，列也必须拥有相似的数据类型，同时，每条SELCCT语句中的列的顺序必须相同。<br>说白了，就是把两个表的结果拼接成为一个表，能够拼接的前提是两个表都用相同的列，你是3列，<br>我也是3列。<br>前面讲过我们要做的第一件事，是判断有多少列，主要目的就是为了使用union联合查询。<br>(因为要构造相同数量的列)</p>
+<h1 id="group-concat-用法："><a href="#group-concat-用法：" class="headerlink" title="group_concat()用法："></a>group_concat()用法：</h1><p>group_concat(id)              表示把id字段的值在同一行打印出来，逗号分隔(默认)<br>group_concat(‘<em>‘,id1,id2)   表示使用</em>进行分割，拼接id1和id2</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/" data-id="ckw224ebk0000k4uy2du88n9j" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-秀哥硬核SQL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/" class="article-date">
@@ -488,50 +525,6 @@
 
 
   
-    <article id="post-指针（1）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2021-10-24T02:58:37.589Z" itemprop="datePublished">2021-10-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="关于指针（1）"><a href="#关于指针（1）" class="headerlink" title="关于指针（1）"></a>关于指针（1）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>计算机中所有的数据都必须放在内存中，不同类型的数据占用的字节数不一样，例如 int 占用 4 个字节，char 占用 1 个字节。为了正确地访问这些数据，必须为每个字节都编上号码，就像门牌号、身份证号一样，每个字节的编号是唯一的，根据编号可以准确地找到某个字节。简单来说就是一个字节的地址</p>
-<p>假设变量 a、b、c 在内存中的地址分别是 0X1000、0X2000、0X3000，那么加法运算<code>c = a + b;</code>将会被转换成类似下面的形式：</p>
-<p>0X3000 = (0X1000) + (0X2000);</p>
-<p>虽然<strong>变量名、函数名、字符串名和数组名</strong>在本质上是一样的，它们都是<em>地址的助记符</em>，但在编写代码的过程中，我们认为<strong>变量名表示的是数据本身</strong>，而<strong>函数名、字符串名和数组名表示的是代码块或数据块的首地址。</strong></p>
-<h3 id="接下来是指针在编程过程中的应用"><a href="#接下来是指针在编程过程中的应用" class="headerlink" title="接下来是指针在编程过程中的应用"></a>接下来是指针在编程过程中的应用</h3><p><img src="https://i.loli.net/2021/10/24/AreiqmBQZNnblzt.png"></p>
-<p>在这里我们可以看到指针的具体用法（这里我实在难以用言语来表达）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p1=&amp;i <span class="comment">//通过取地址符&amp;，把i的地址赋给了p1 把这个称为p1指向i，</span></span><br><span class="line">    <span class="comment">//这样我们可以用*p1来表示i</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2021/10/24/TGC9ilJFafw6dhc.png"></p>
-<h5 id="假如我设"><a href="#假如我设" class="headerlink" title="假如我设"></a>假如我设</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a,*p1=&amp;a <span class="comment">//下面这些都是等价的</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2021/10/24/SvTuzaoJLH4tkA9.png"></p>
-<h5 id="在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2-把定义变量和赋值写在同一行。"><a href="#在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2-把定义变量和赋值写在同一行。" class="headerlink" title="在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2 把定义变量和赋值写在同一行。"></a>在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2 把定义变量和赋值写在同一行。</h5><p><img src="https://i.loli.net/2021/10/24/rd1kcaqOYmenHB8.png"></p>
-<p><img src="https://i.loli.net/2021/10/24/sibp7dIn6efl4A9.png"></p>
-<p><img src="https://i.loli.net/2021/10/24/LtYZINUzgE38pPy.png"></p>
-<p><em>以上是指针的基本引用</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" data-id="ckw0rpwo30006rouy67569d3c" data-title="" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -568,6 +561,10 @@
       <ul>
         
           <li>
+            <a href="/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/">(no title)</a>
           </li>
         
@@ -581,10 +578,6 @@
         
           <li>
             <a href="/2021/11/01/MYSQL/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/">(no title)</a>
           </li>
         
       </ul>

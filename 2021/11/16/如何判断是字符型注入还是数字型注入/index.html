@@ -6,17 +6,19 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="太感动了 终于发送成功了 0.0">
+  <meta name="description" content="如何判断是字符型注入还是数字型注入  1：字符型会自动加入两个单引号。  2：数字型不会加入两个单引号。  3：被单引号括起来的数据会被当成一个整体。  4：LIMIT m,n 会影响select语句的结果。  5：页面回显发生错误和页面不回显数据是两回事。前者表示sql语句出错了，后者表示sql语句没有错误，但是条件不成立。  union用法：UNION操作符用于合并两个或多个SELECT语句的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://wifi-0x.github.io/2021/10/10/001/index.html">
+<meta property="og:url" content="http://wifi-0x.github.io/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="太感动了 终于发送成功了 0.0">
+<meta property="og:description" content="如何判断是字符型注入还是数字型注入  1：字符型会自动加入两个单引号。  2：数字型不会加入两个单引号。  3：被单引号括起来的数据会被当成一个整体。  4：LIMIT m,n 会影响select语句的结果。  5：页面回显发生错误和页面不回显数据是两回事。前者表示sql语句出错了，后者表示sql语句没有错误，但是条件不成立。  union用法：UNION操作符用于合并两个或多个SELECT语句的">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-10-10T14:56:31.188Z">
-<meta property="article:modified_time" content="2021-10-10T14:57:40.096Z">
+<meta property="og:image" content="https://i.loli.net/2021/11/16/eQJ8KEMIw93Ut4C.png">
+<meta property="article:published_time" content="2021-11-16T12:12:57.287Z">
+<meta property="article:modified_time" content="2021-11-16T12:12:57.468Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/11/16/eQJ8KEMIw93Ut4C.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -73,10 +75,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-001" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-如何判断是字符型注入还是数字型注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/10/10/001/" class="article-date">
-  <time class="dt-published" datetime="2021-10-10T14:56:31.188Z" itemprop="datePublished">2021-10-10</time>
+    <a href="/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2021-11-16T12:12:57.287Z" itemprop="datePublished">2021-11-16</time>
 </a>
     
   </div>
@@ -85,12 +87,20 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>太感动了 终于发送成功了 0.0</p>
+        <h1 id="如何判断是字符型注入还是数字型注入"><a href="#如何判断是字符型注入还是数字型注入" class="headerlink" title="如何判断是字符型注入还是数字型注入"></a>如何判断是字符型注入还是数字型注入</h1><p><img src="https://i.loli.net/2021/11/16/eQJ8KEMIw93Ut4C.png"></p>
+<pre><code> 1：字符型会自动加入两个单引号。
+ 2：数字型不会加入两个单引号。
+ 3：被单引号括起来的数据会被当成一个整体。
+ 4：LIMIT m,n 会影响select语句的结果。
+ 5：页面回显发生错误和页面不回显数据是两回事。前者表示sql语句出错了，后者表示sql语句没有错误，但是条件不成立。
+</code></pre>
+<h1 id="union用法："><a href="#union用法：" class="headerlink" title="union用法："></a>union用法：</h1><p>UNION操作符用于合并两个或多个SELECT语句的结果集，而且UNION内部的SELECT语句必须拥<br>有相同数量的列，列也必须拥有相似的数据类型，同时，每条SELCCT语句中的列的顺序必须相同。<br>说白了，就是把两个表的结果拼接成为一个表，能够拼接的前提是两个表都用相同的列，你是3列，<br>我也是3列。<br>前面讲过我们要做的第一件事，是判断有多少列，主要目的就是为了使用union联合查询。<br>(因为要构造相同数量的列)</p>
+<h1 id="group-concat-用法："><a href="#group-concat-用法：" class="headerlink" title="group_concat()用法："></a>group_concat()用法：</h1><p>group_concat(id)              表示把id字段的值在同一行打印出来，逗号分隔(默认)<br>group_concat(‘<em>‘,id1,id2)   表示使用</em>进行分割，拼接id1和id2</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/10/001/" data-id="ckw0rpwns0000rouy1i42caco" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://wifi-0x.github.io/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/" data-id="ckw224ebk0000k4uy2du88n9j" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -100,19 +110,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/09/19/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title"></div>
     </a>
   
 </nav>
