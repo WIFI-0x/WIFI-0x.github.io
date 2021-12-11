@@ -71,6 +71,39 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-收藏" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/10/27/%E6%94%B6%E8%97%8F/" class="article-date">
+  <time class="dt-published" datetime="2021-10-27T14:52:07.911Z" itemprop="datePublished">2021-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="收藏"><a href="#收藏" class="headerlink" title="收藏"></a>收藏</h1><h6 id="调试了好久才成功的代码"><a href="#调试了好久才成功的代码" class="headerlink" title="调试了好久才成功的代码"></a>调试了好久才成功的代码</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> x = <span class="number">0</span>, a = <span class="number">1.0</span>, b = <span class="number">1.0</span>, sum = <span class="number">1</span>,d=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>, i = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入x与n\n&quot;</span>);</span><br><span class="line">	scanf_s(<span class="string">&quot;%f&quot;</span>, &amp;x);</span><br><span class="line">	scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= n)</span><br><span class="line">	&#123;</span><br><span class="line">		a = a * x;</span><br><span class="line">		b = b * i;</span><br><span class="line">		d = a / b;</span><br><span class="line">		sum += d;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;e*x=%f&quot;</span>, sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>  zhimu=<span class="number">0</span>,kongge=<span class="number">0</span>,shuzhi=<span class="number">0</span>,other=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>  ch;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please enter a string of characters.&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;Z&#x27;</span> || ch &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">			zhimu++;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">			shuzhi++;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">			kongge++;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			other++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;字母数为%d\n数字数为%d\n空格数为%d\n其他字符个数为%d\n&quot;</span>,zhimu,shuzhi,kongge,other);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/27/QsZG5cx6UCBEq2p.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/" data-id="ckw0rpwo30007rouy6qaahyst" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-PHP(1)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/10/27/PHP(1)/" class="article-date">
@@ -389,7 +422,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li></ul>
     </div>
   </div>
 
@@ -400,6 +433,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/12/11/%E7%BA%A2%E8%89%B2%E7%88%B1%E5%BF%83%E4%BB%A3%E7%A0%81/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2021/11/21/lab%208/">(no title)</a>
@@ -415,10 +452,6 @@
         
           <li>
             <a href="/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/">(no title)</a>
           </li>
         
       </ul>
