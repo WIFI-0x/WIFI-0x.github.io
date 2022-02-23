@@ -6,7 +6,7 @@
   <link href="http://wifi-0x.github.io/atom.xml" rel="self"/>
   
   <link href="http://wifi-0x.github.io/"/>
-  <updated>2022-02-22T09:47:49.722Z</updated>
+  <updated>2022-02-23T10:18:46.663Z</updated>
   <id>http://wifi-0x.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://wifi-0x.github.io/2022/02/23/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/"/>
+    <id>http://wifi-0x.github.io/2022/02/23/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</id>
+    <published>2022-02-23T10:18:46.465Z</published>
+    <updated>2022-02-23T10:18:46.663Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="暴力破解账号密码"><a href="#暴力破解账号密码" class="headerlink" title="暴力破解账号密码"></a>暴力破解账号密码</h2><hr><p>设置安全级别为 Low，点击 Brute Force 按钮，进行暴力破解模块，发现是个用户登录的页面，随意输入用户名和密码，发现提示用户名或密码错误；同时发现输入的用户名和密码携带在了 URL 中，所以确认该页面提交方式为 GET</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalM12dXMWTpGxEeiblUzBxrn5hqGZD2JxYRP80eQLfaFoO7vJeybI6DRAA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>DVWA 存在一个默认账户，用户名和密码为 admin/password，使用该账户登录，发现页面提示 Welcome to the passowrd protected area admin，来说明登录成功。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalMXd5e3ZDzmYEmf08iaNqj1U96qPaJVMMSwXITQGloCARZAUyYVpwdic5A/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>构建一个字典文件，包含正确的密码信息 password</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalM3LnBLFiaAhZqxobjwNibqjfAjztB5EtrhhkYvc0SDjJTl1qLGEaHX6Lg/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>用 Burpsuite 抓包</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalMxIOY1HEicKCNsAS8EEAYmPPLV0grHxAMkVyD81eYDcOR1GFEMSCPiafw/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>点击 Action 按钮，选择 Send to Intruder，把数据包信息发送到暴力破解模块</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalMPIbn69OwibtJL04cE1pPXXNAZWb5aQibKpGLzEZVbqxzgiafK88qyabPg/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>点击 Intruder 模块，选择 Positions 标签，可以看到发送过来的数据包信息</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalMgwVlC0dmZBjibFIia6r2szmcyA0GwZEDqnRc0W276Infibowa7WBicZQOA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>点击 Clear § 按钮清除掉所有变量</p><p>添加变量</p><p>切换到 Payloads 标签，在 Payload Option 处，点击 Load 按钮，选择构建好的字典文件</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalMvnoibPUBxhUwXLkvfVx5wmWVzf18QibSZ5EOibg6ibqJEADAbFqY4xlZxg/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>下拉到 Grep Match 处，点击 Clear，清除掉现有猜解成功匹配字符，然后添加之前我们看到的 DVWA 中登录成功的提示字符 Welcome to the passowrd，然后点击 Add。这样等到猜解成功后，就会自动提示，不用我们自己去比对回包长度和响应状态码来判断哪个是正确的密码</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalM2gGZT1WJB0xw0ucEYAhJWLFF0ABeyPkLkn2DWpClTcTMxnzvxxf7Mw/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p><p>点击 Start Attack 按钮，开始爆破，可以发现，当猜解到 password 时，回包长度与其他都不一致，而且打钩提示该密码是正确的</p><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/dzgsaP9cFhqicKEuf9qJpWiaSA9lkJKalMRWPplXcZrqibKCedd1xQ2IfYDQOF36r7KWeSOqbgZwlt3Oa48YyJf8A/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="å¾ç"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;暴力破解账号密码&quot;&gt;&lt;a href=&quot;#暴力破解账号密码&quot; class=&quot;headerlink&quot; title=&quot;暴力破解账号密码&quot;&gt;&lt;/a&gt;暴力破解账号密码&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;设置安全级别为 Low，点击 Brute Force 按钮，进行暴力破解模块，发现</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title></title>
@@ -401,26 +422,6 @@
     <summary type="html">&lt;p&gt;测试一下&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg&quot;&gt;&lt;/p&gt;
 </summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/"/>
-    <id>http://wifi-0x.github.io/2021/10/24/%E6%8C%87%E9%92%88%EF%BC%881%EF%BC%89/</id>
-    <published>2021-10-24T02:58:37.589Z</published>
-    <updated>2021-10-24T10:52:52.266Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="关于指针（1）"><a href="#关于指针（1）" class="headerlink" title="关于指针（1）"></a>关于指针（1）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>计算机中所有的数据都必须放在内存中，不同类型的数据占用的字节数不一样，例如 int 占用 4 个字节，char 占用 1 个字节。为了正确地访问这些数据，必须为每个字节都编上号码，就像门牌号、身份证号一样，每个字节的编号是唯一的，根据编号可以准确地找到某个字节。简单来说就是一个字节的地址</p><p>假设变量 a、b、c 在内存中的地址分别是 0X1000、0X2000、0X3000，那么加法运算<code>c = a + b;</code>将会被转换成类似下面的形式：</p><p>0X3000 = (0X1000) + (0X2000);</p><p>虽然<strong>变量名、函数名、字符串名和数组名</strong>在本质上是一样的，它们都是<em>地址的助记符</em>，但在编写代码的过程中，我们认为<strong>变量名表示的是数据本身</strong>，而<strong>函数名、字符串名和数组名表示的是代码块或数据块的首地址。</strong></p><h3 id="接下来是指针在编程过程中的应用"><a href="#接下来是指针在编程过程中的应用" class="headerlink" title="接下来是指针在编程过程中的应用"></a>接下来是指针在编程过程中的应用</h3><p><img src="https://i.loli.net/2021/10/24/AreiqmBQZNnblzt.png"></p><p>在这里我们可以看到指针的具体用法（这里我实在难以用言语来表达）</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p1=&amp;i <span class="comment">//通过取地址符&amp;，把i的地址赋给了p1 把这个称为p1指向i，</span></span><br><span class="line">    <span class="comment">//这样我们可以用*p1来表示i</span></span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/24/TGC9ilJFafw6dhc.png"></p><h5 id="假如我设"><a href="#假如我设" class="headerlink" title="假如我设"></a>假如我设</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a,*p1=&amp;a <span class="comment">//下面这些都是等价的</span></span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/24/SvTuzaoJLH4tkA9.png"></p><h5 id="在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2-把定义变量和赋值写在同一行。"><a href="#在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2-把定义变量和赋值写在同一行。" class="headerlink" title="在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2 把定义变量和赋值写在同一行。"></a>在这里我们可以看到两种定义指针的方法1先定义变量，再把变量赋值给指针。2 把定义变量和赋值写在同一行。</h5><p><img src="https://i.loli.net/2021/10/24/rd1kcaqOYmenHB8.png"></p><p><img src="https://i.loli.net/2021/10/24/sibp7dIn6efl4A9.png"></p><p><img src="https://i.loli.net/2021/10/24/LtYZINUzgE38pPy.png"></p><p><em>以上是指针的基本引用</em></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;关于指针（1）&quot;&gt;&lt;a href=&quot;#关于指针（1）&quot; class=&quot;headerlink&quot; title=&quot;关于指针（1）&quot;&gt;&lt;/a&gt;关于指针（1）&lt;/h1&gt;&lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概</summary>
       
     
     
