@@ -41,6 +41,28 @@
   
   <entry>
     <title></title>
+    <link href="http://wifi-0x.github.io/2022/02/13/CSS%E8%AF%AD%E8%A8%80/"/>
+    <id>http://wifi-0x.github.io/2022/02/13/CSS%E8%AF%AD%E8%A8%80/</id>
+    <published>2022-02-13T09:20:43.070Z</published>
+    <updated>2022-02-23T07:20:15.714Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="CSS语言"><a href="#CSS语言" class="headerlink" title="CSS语言"></a>CSS语言</h3><hr><p>作用：定义了网站内容的【布局和样式】。<br>    ps：html语言定义的是内容。</p><pre><code>语法：选取式语法。选取标签，然后给选中的标签添加样式和布局。 需要在head里面，加上&lt;style&gt;&lt;/style&gt;标签名选择器 , 表现形式： 标签名 &#123;属性：值&#125;id选择器 ， 表现形式： #id名 &#123;属性：值&#125; ，ps：使用id选择器，必须给标签添加一个id属性。class选择器 ，表现形式： .class名 &#123;属性：值&#125; ，ps：使用class选择器，必须给标签添加一个class属性。属性：z-index ，作用：定义的标签显示的顺序</code></pre><h3 id="Javascript语言"><a href="#Javascript语言" class="headerlink" title="Javascript语言"></a>Javascript语言</h3><hr><p>作用：定义了网站的功能<br>    ps：html语言定义的是【内容】。CSS定义的是内容的【样式和布局】</p><p>语法：变量函数式语法，</p><p>核心：<em><strong>变量存储数据，函数决定功能</strong></em>–》 作用。</p><p>在数学里面设变量  ：设 x = “888888”</p><p>在Javascript语言设变量 ：var x =”888888”<br>    函数： alert() ，作用：弹框</p><p>var x =”888888”  # 变量x存储了888888的数据<br>alert(x);  # 弹框，弹的内容是变量x存储的内容。</p><p>js也可以选取标签的。</p><p>var a = document.getElementById(“id”);<br>        document.getElementById  函数，作用：根据ID选取标签</p><p>document.getElementById(‘vv’).onclick = function () {<br>      alert(‘6666’)   // 这里写功能<br>}<br>        onclick # 给标签定义了一个点击事件，你点它，它就会出现功能</p><h3 id="PHP语言"><a href="#PHP语言" class="headerlink" title="PHP语言"></a>PHP语言</h3><hr><p>作用：【接收】前端传过来的【数据】，进行处理,将处理完的数据【变成前端代码】交给【浏览器执行】<br>    语法：变量函数式语法</p><p>在Javascript语言设变量 ：var x =”888888”<br>在php语言设变量：$x = “888888”<br>    函数：echo ，作用：输出内容。<br>ps：后端语言的解析，需要中间件的配合。</p><p>$a=$_REQUEST[‘username’];<br>echo “<a href='https://www.baidu.com'>“.$a.”</a>“;</p><p>$_REQUEST # 函数，作用：接受【参数的名】</p><p>ps：服务器是根据【参数的名】来接受【参数的值】。 </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;CSS语言&quot;&gt;&lt;a href=&quot;#CSS语言&quot; class=&quot;headerlink&quot; title=&quot;CSS语言&quot;&gt;&lt;/a&gt;CSS语言&lt;/h3&gt;&lt;hr&gt;
+&lt;p&gt;作用：定义了网站内容的【布局和样式】。&lt;br&gt;    ps：html语言定义的是内容。&lt;/p&gt;
+&lt;pre&gt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
     <link href="http://wifi-0x.github.io/2022/02/12/HTML%E8%AF%AD%E8%A8%80%EF%BC%881%EF%BC%89/"/>
     <id>http://wifi-0x.github.io/2022/02/12/HTML%E8%AF%AD%E8%A8%80%EF%BC%881%EF%BC%89/</id>
     <published>2022-02-12T11:23:44.191Z</published>
@@ -399,27 +421,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;关于指针（1）&quot;&gt;&lt;a href=&quot;#关于指针（1）&quot; class=&quot;headerlink&quot; title=&quot;关于指针（1）&quot;&gt;&lt;/a&gt;关于指针（1）&lt;/h1&gt;&lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/10/001/"/>
-    <id>http://wifi-0x.github.io/2021/10/10/001/</id>
-    <published>2021-10-10T14:56:31.188Z</published>
-    <updated>2021-10-10T14:57:40.096Z</updated>
-    
-    <content type="html"><![CDATA[<p>太感动了 终于发送成功了 0.0</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;太感动了 终于发送成功了 0.0&lt;/p&gt;
-</summary>
       
     
     

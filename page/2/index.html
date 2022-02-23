@@ -148,6 +148,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-11-11 21:01:23" itemprop="dateCreated datePublished" datetime="2021-11-11T21:01:23+08:00">2021-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-11-15 22:33:39" itemprop="dateModified" datetime="2021-11-15T22:33:39+08:00">2021-11-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="秀哥硬核SQL"><a href="#秀哥硬核SQL" class="headerlink" title="秀哥硬核SQL"></a>秀哥硬核SQL</h1><hr>
+<p><strong>有什么库</strong>       show databases;</p>
+<p><strong>有什么表</strong>       show tables;</p>
+<p><strong>表里的结构</strong>    desc 表名；</p>
+<p><strong>使用库</strong>            use 库名；</p>
+<p><strong>建立库</strong>            create database 库名</p>
+<p><strong>删除库</strong>            drop database 库名</p>
+<p><strong>建立表</strong>            create table 表名 (字段名1 字段类型，字段名2 字段类型) </p>
+<h4 id="常见类型-数字-int-字符串-varchar-需要加“-”"><a href="#常见类型-数字-int-字符串-varchar-需要加“-”" class="headerlink" title="常见类型 数字 int 字符串 varchar(需要加“ ”)"></a><u><em>常见类型 数字 int 字符串 varchar</em></u>(需要加“ ”)</h4><p><strong>删除表</strong>            drop table 表名</p>
+<h3 id="修改表内字段"><a href="#修改表内字段" class="headerlink" title="修改表内字段{"></a><strong>修改表内字段</strong>{</h3><p><strong>增加字段</strong> alter table 表名 add 字段名 字段类型</p>
+<p><strong>删字段</strong> alter table 表名 drop 字段名</p>
+<p><strong>修改表内字段名</strong> alter table 表名 change 旧字符名 新字符名 新类型 </p>
+<p>}</p>
+<h3 id="往表内插入数据（增）暂时不会插入汉字"><a href="#往表内插入数据（增）暂时不会插入汉字" class="headerlink" title="往表内插入数据（增）暂时不会插入汉字"></a><strong>往表内插入数据（增）</strong>暂时不会插入汉字</h3><p>：insert into 表名values (值1, 值2);//按顺序插入</p>
+<p>​                                         或者 insert into 表名（列名1，列名2） values(值1， 值2)</p>
+<p><strong>修改数据</strong> update 表名 set 列名=新值 where 列名=旧值</p>
+<p>​                 update 表名 set 列名=新列值，列名2=新列值 where 列名 =旧列值</p>
+<p><strong>删除数据</strong> delete from 表名 where 列名=列值  </p>
+<p>//这会删除这列中的一个数 </p>
+<p>//如果不写 where及后面的东西 就会删除整个表</p>
+<p>​                  </p>
+<h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>select*from 表名 where 条件（条件可以这样写 列名=”这列中的某个数据”）</p>
+<p>select  字段名 from 表名 where 条件 </p>
+<p>SELECT *FROM 表名 ORDER BY 列名(可以用1，2，3.) </p>
+<p>  //在最后面加<strong>desc</strong>将以降序排列</p>
+<h5 id="休眠-select-sleep（10）；-服务器摸鱼10s"><a href="#休眠-select-sleep（10）；-服务器摸鱼10s" class="headerlink" title="休眠 select sleep（10）； //服务器摸鱼10s"></a>休眠 select sleep（10）； //服务器摸鱼10s</h5><p><strong>注意</strong></p>
+<p><em>1 SQL语句结尾要加 ;</em></p>
+<p><em>2 数据库语句部分大小写，但是数据分</em></p>
+<p><em>3 数值要加   ‘66’</em></p>
+<h3 id="cmd的命令"><a href="#cmd的命令" class="headerlink" title="cmd的命令"></a>cmd的命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//进入d盘</span><br><span class="line">D:</span><br><span class="line">//进入F盘</span><br><span class="line">F:</span><br><span class="line">查看当前目录 dir</span><br><span class="line">打开 cd</span><br><span class="line">返回上一级 cd ..</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="打开mysql"><a href="#打开mysql" class="headerlink" title="打开mysql"></a>打开mysql</h3><p>D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql -u root -p</p>
+<p>第一步 d：//切换到d盘</p>
+<p>第二步  cd D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql</p>
+<p>第三步  mysql -u root -****</p>
+<p>2021 11 15 星期一</p>
+<h1 id="Fighting"><a href="#Fighting" class="headerlink" title="Fighting"></a><em><strong>Fighting</strong></em></h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/09/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -828,65 +928,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/10/10/001/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/10/001/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-10-10 22:56:31 / Modified: 22:57:40" itemprop="dateCreated datePublished" datetime="2021-10-10T22:56:31+08:00">2021-10-10</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>太感动了 终于发送成功了 0.0</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -956,7 +997,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
