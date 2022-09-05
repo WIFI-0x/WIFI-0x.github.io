@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wifi-0x.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="域名的形式： zkaq.cn    顶级域名(一级) a.zkaq.cn 二级域名 b.a.zkaq.cn  三级域名 根据点的多少来判断他是几级域名 二级域名就是一级域名的子域名 三级是二级的子域名 一、通常情况下，一般主站的防御会很严，但是他的子站安全性可能不会那么全面 二、同一个域名下的二级域名都属于相同资产，一般而言都有相关的联系，因此可以扩大攻击范围 运用在线的子域名搜索网站一、运用搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="子域名爆破">
+<meta property="og:url" content="http://wifi-0x.github.io/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/index.html">
+<meta property="og:site_name" content="Breeze">
+<meta property="og:description" content="域名的形式： zkaq.cn    顶级域名(一级) a.zkaq.cn 二级域名 b.a.zkaq.cn  三级域名 根据点的多少来判断他是几级域名 二级域名就是一级域名的子域名 三级是二级的子域名 一、通常情况下，一般主站的防御会很严，但是他的子站安全性可能不会那么全面 二、同一个域名下的二级域名都属于相同资产，一般而言都有相关的联系，因此可以扩大攻击范围 运用在线的子域名搜索网站一、运用搜索">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-16T00:17:35.000Z">
+<meta property="article:modified_time" content="2022-04-16T00:45:43.191Z">
+<meta property="article:author" content="微风">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://wifi-0x.github.io/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>子域名爆破 | Breeze</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Breeze" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Breeze</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/04/16/%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          子域名爆破
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-16 08:17:35 / 修改时间：08:45:43" itemprop="dateCreated datePublished" datetime="2022-04-16T08:17:35+08:00">2022-04-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>域名的形式：</p>
+<p><strong>zkaq.cn    顶级域名(一级)</strong></p>
+<p><strong>a.zkaq.cn 二级域名</strong></p>
+<p><strong>b.a.zkaq.cn  三级域名</strong></p>
+<p>根据点的多少来判断他是几级域名</p>
+<p><strong>二级域名</strong>就是<strong>一级域名的子域名</strong></p>
+<p><strong>三级是二级的子域名</strong></p>
+<p><em>一、通常情况下，一般主站的防御会很严，但是他的子站安全性可能不会那么全面</em></p>
+<p><em>二、同一个域名下的二级域名都属于相同资产，一般而言都有相关的联系，因此可以扩大攻击范围</em></p>
+<h3 id="运用在线的子域名搜索网站"><a href="#运用在线的子域名搜索网站" class="headerlink" title="运用在线的子域名搜索网站"></a>运用在线的子域名搜索网站</h3><p><strong>一、运用搜索引擎（谷歌语法）</strong></p>
+<p>site:qq.com （搜索qq.com下面的所有子域名）</p>
+<p><strong>二、证书搜索</strong></p>
+<p>基于SSL证书查询子域：<a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh/</a></p>
+<p><strong>三、查询Dns的解析记录</strong></p>
+<p>基于DNS记录查询子域：<a target="_blank" rel="noopener" href="https://dns.bufferover.run/dns?q=">https://dns.bufferover.run/dns?q=</a></p>
+<p><strong>四、在线爆破枚举子域</strong>：<a target="_blank" rel="noopener" href="http://phpinfo.me/domain/">http://phpinfo.me/domain/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/10/SQLmap/" rel="prev" title="SQLmap">
+      <i class="fa fa-chevron-left"></i> SQLmap
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/11/DNSlog/" rel="next" title="DNSlog">
+      DNSlog <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%94%A8%E5%9C%A8%E7%BA%BF%E7%9A%84%E5%AD%90%E5%9F%9F%E5%90%8D%E6%90%9C%E7%B4%A2%E7%BD%91%E7%AB%99"><span class="nav-number">1.</span> <span class="nav-text">运用在线的子域名搜索网站</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">微风</p>
+  <div class="site-description" itemprop="description">微风的学习记录</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">微风</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

